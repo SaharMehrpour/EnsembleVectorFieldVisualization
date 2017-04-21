@@ -1,0 +1,9 @@
+line {
+    stroke: black;
+    stroke-width: 2px;
+}
+
+svg {
+    height: 700px;
+    width: 700px;
+}
