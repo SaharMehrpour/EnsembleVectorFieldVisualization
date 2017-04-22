@@ -5,5 +5,23 @@ line {
 
 svg {
     height: 700px;
-    width: 700px;
+    width: 600px;
+}
+
+.cps {
+    fill: forestgreen;
+    opacity: 0.5;
+    stroke: forestgreen;
+    stroke-width: 5px;
+}
+
+#svg_div {
+    float: left;
+    padding: 5px;
+}
+
+#img_div {
+    float: left;
+    padding: 5px;
+    margin-top: 45px;
 }

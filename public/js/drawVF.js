@@ -3,11 +3,11 @@
  */
 
 
-function DrawVF(vf, vf2) {
+function DrawVF(verts, faces) {
     var self = this;
 
-    self.vf = vf;
-    self.vf2 = vf2;
+    self.verts = verts;
+    self.faces = faces;
     self.svg = d3.select("#vf_svg");
 
     self.init();
@@ -17,37 +17,26 @@ function DrawVF(vf, vf2) {
 DrawVF.prototype.init = function() {
     var self = this;
 
-    var maxX = d3.max(self.vf, function (d) {
-        return d.x;
-    });
-    var minX = d3.min(self.vf, function (d) {
-        return d.x;
-    });
-    var maxY = d3.max(self.vf, function (d) {
-        return d.y;
-    });
-    var minY = d3.min(self.vf, function (d) {
-        return d.y;
-    });
+    var maxX = d3.max(self.verts, function (d) { return d.x; });
+    var minX = d3.min(self.verts, function (d) { return d.x; });
+    var maxY = d3.max(self.verts, function (d) { return d.y; });
+    var minY = d3.min(self.verts, function (d) { return d.y; });
 
     self.scaleX = d3.scaleLinear()
         .domain([minX, maxX])
-        .range([50,650]);
+        .range([50,520]);
 
     self.scaleY = d3.scaleLinear()
         .domain([minY, maxY])
         .range([50,650]);
 
-    d3.select('#change').on('click', function () {
-        self.draw2();
-    });
 };
 
 DrawVF.prototype.draw = function () {
     var self = this;
 
     var arrows = self.svg.selectAll('.arrow')
-        .data(self.vf);
+        .data(self.verts);
 
     arrows.enter().append('line')
         .classed('arrow', true)
@@ -58,39 +47,56 @@ DrawVF.prototype.draw = function () {
             return self.scaleY(d.y);
         })
         .attr('x2', function (d) {
-            var x1 = self.scaleX(d.x);
-            var scaled_vx = self.scaleX(d.vx);
-            var scaled_vy = self.scaleY(d.vy);
-            var norm = Math.sqrt(scaled_vx * scaled_vx + scaled_vy * scaled_vy);
-            return x1 + d.vx;// / norm;
+            return self.scaleX(d.x);
         })
         .attr('y2', function (d) {
-            var y1 = self.scaleY(d.y);
-            var scaled_vx = self.scaleX(d.vx);
-            var scaled_vy = self.scaleY(d.vy);
-            var norm = Math.sqrt(scaled_vx * scaled_vx + scaled_vy * scaled_vy);
-            return y1 + d.vy;// / norm;
+            return self.scaleY(d.y);
+        });
+    //.attr("marker-end", "url(#arrow)");
 
-        })
-        .attr("marker-end", "url(#arrow)");
+    console.log('ready!');
 };
 
-DrawVF.prototype.draw2 = function () {
+DrawVF.prototype.drawEnsemble = function (vf, cps, fileLocation) {
     var self = this;
 
-    console.log('draw2');
     self.svg.selectAll('.arrow')
         .transition()
         .duration(1500)
         .attr('x2', function (d, i) {
             var x1 = self.scaleX(d.x);
-            return x1 + self.vf2[i].vx;
+            //var x1 = d3.select(this).attr('x2');
+            return x1 + vf[i].vx;
         })
         .attr('y2', function (d, i) {
             var y1 = self.scaleY(d.y);
-            return y1 + self.vf2[i].vy;
+            //var y2 = d3.select(this).attr('y2');
+            return y1 + vf[i].vy;
 
+        })
+        .attr("marker-end", "url(#arrow)");
+
+
+    var cpoints = self.svg.selectAll('.cps')
+        .data(cps);
+
+    cpoints.enter().append('path')
+        .classed('cps', true)
+        .merge(cpoints)
+        //.transition()
+        //.duration(1500)
+        .attr('d', function (d) {
+            var v1x = self.scaleX(self.faces[d.simplexIndex].v1x);
+            var v2x = self.scaleX(self.faces[d.simplexIndex].v2x);
+            var v3x = self.scaleX(self.faces[d.simplexIndex].v3x);
+            var v1y = self.scaleY(self.faces[d.simplexIndex].v1y);
+            var v2y = self.scaleY(self.faces[d.simplexIndex].v2y);
+            var v3y = self.scaleY(self.faces[d.simplexIndex].v3y);
+            return 'M'+v1x+' '+v1y+' L'+v2x+' '+v2y+' L'+v3x+' '+v3y+' Z' ;
         });
-};
 
+    cpoints.exit().remove();
+
+    d3.select('img').attr('src', fileLocation);
+};
 

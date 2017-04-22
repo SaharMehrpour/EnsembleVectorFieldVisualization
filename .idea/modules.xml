@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/VF viz.iml" filepath="$PROJECT_DIR$/.idea/VF viz.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/EnsembleVectorFieldVisualization.iml" filepath="$PROJECT_DIR$/.idea/EnsembleVectorFieldVisualization.iml" />
     </modules>
   </component>
 </project>

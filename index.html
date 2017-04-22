@@ -3,7 +3,7 @@
 
 <head>
 <meta charset="utf-8">
-<title>SecPrivMeta</title>
+<title>Ensemble VF Vis</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
     <link rel="stylesheet" href="public/css/index.css" type="text/css">
@@ -18,16 +18,27 @@
 </head>
 
 <body>
-
+<div style="padding: 10px">
+    <h3> Click on one on the buttons:</h3>
+    <input type="submit" id="change_VF1" value="click VF1">
+    <input type="submit" id="change_VF2" value="click VF2">
+    <input type="submit" id="change_VF3" value="click VF3">
+    <input type="submit" id="change_VF4" value="click VF4">
+    <input type="submit" id="change_VF5" value="click VF5">
+</div>
 <div>
-    <svg id="vf_svg">
-        <defs>
-            <marker id="arrow" markerWidth="10" markerHeight="10" refX="0" refY="3" orient="auto" markerUnits="strokeWidth" viewBox="0 0 20 20">
-                <path d="M0,0 L0,6 L9,3 z" fill="#f00" />
-            </marker>
-        </defs>
-    </svg>
-    <input type="submit" id="change" value="click">
+    <div id="svg_div">
+        <svg id="vf_svg">
+            <defs>
+                <marker id="arrow" markerWidth="10" markerHeight="10" refX="0" refY="3" orient="auto" markerUnits="strokeWidth" viewBox="0 0 20 20">
+                    <path d="M0,0 L0,6 L9,3 z" fill="#f00" />
+                </marker>
+            </defs>
+        </svg>
+    </div>
+    <div id="img_div">
+        <img>
+    </div>
 </div>
 
 <script type="application/javascript" src="public/js/drawVF.js"></script>
