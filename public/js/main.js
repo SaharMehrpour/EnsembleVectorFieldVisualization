@@ -44,14 +44,9 @@
                         d.norm = Math.sqrt(d.vx * d.vx + d.vy * d.vy)
                     });
 
-                    var draw_vf = new DrawVF("#indi_vf_div", verts, faces);
-                    draw_vf.draw(vf, cps, 'img/img1.png');
+                    var manager = new Manager(verts, faces, []);
+                    manager.individual(vf, cps, treeData, "img/img1.png");
 
-                    var draw_contour = new DrawContour("#indi_contour_div", verts, faces);
-                    draw_contour.draw(vf, cps);
-
-                    var draw_tree = new DrawTree("#indi_tree_div", draw_contour);
-                    draw_tree.draw(treeData);
                 }
             });
 

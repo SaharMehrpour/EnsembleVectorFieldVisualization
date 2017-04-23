@@ -2,12 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="49221ee5-7a77-420a-aea0-cefdae4faaa2" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/drawContour.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/manager.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/css/index.css" afterPath="$PROJECT_DIR$/public/css/index.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/drawTree.js" afterPath="$PROJECT_DIR$/public/js/drawTree.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/drawVF.js" afterPath="$PROJECT_DIR$/public/js/drawVF.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/main.js" afterPath="$PROJECT_DIR$/public/js/main.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -26,18 +24,18 @@
       <file leaf-file-name="index.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/css/index.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="162">
-              <caret line="58" column="1" lean-forward="false" selection-start-line="58" selection-start-column="1" selection-end-line="58" selection-end-column="1" />
+            <state relative-caret-position="45">
+              <caret line="3" column="14" lean-forward="false" selection-start-line="3" selection-start-column="14" selection-end-line="3" selection-end-column="14" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="95">
-              <caret line="30" column="8" lean-forward="false" selection-start-line="30" selection-start-column="8" selection-end-line="30" selection-end-column="8" />
+            <state relative-caret-position="408">
+              <caret line="42" column="29" lean-forward="false" selection-start-line="42" selection-start-column="17" selection-end-line="42" selection-end-column="29" />
               <folding>
                 <element signature="n#style#0;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
@@ -48,42 +46,27 @@
       <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/js/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="52" column="79" lean-forward="false" selection-start-line="52" selection-start-column="79" selection-end-line="52" selection-end-column="79" />
+            <state relative-caret-position="621">
+              <caret line="47" column="71" lean-forward="false" selection-start-line="47" selection-start-column="71" selection-end-line="47" selection-end-column="71" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="drawVF.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/js/drawVF.js">
+      <file leaf-file-name="manager.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/public/js/manager.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="201">
-              <caret line="33" column="42" lean-forward="false" selection-start-line="33" selection-start-column="42" selection-end-line="33" selection-end-column="42" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="drawContour.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/js/drawContour.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="570">
-              <caret line="40" column="43" lean-forward="false" selection-start-line="40" selection-start-column="43" selection-end-line="40" selection-end-column="43" />
+            <state relative-caret-position="180">
+              <caret line="201" column="64" lean-forward="false" selection-start-line="201" selection-start-column="64" selection-end-line="201" selection-end-column="64" />
               <folding>
-                <element signature="n#!!doc;n#DrawContour#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="drawTree.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/js/drawTree.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="290">
-              <caret line="22" column="17" lean-forward="true" selection-start-line="22" selection-start-column="17" selection-end-line="22" selection-end-column="17" />
-              <folding>
-                <element signature="n#!!doc;n#DrawTree#0" expanded="false" />
+                <element signature="n#!!doc;n#Manager#0" expanded="false" />
+                <element signature="n#!!block;n#Manager#0" expanded="false" />
+                <element signature="e#263#1344#0" expanded="false" />
+                <element signature="e#1421#1669#0" expanded="false" />
+                <element signature="e#1729#3695#0" expanded="false" />
+                <element signature="e#3760#5855#0" expanded="false" />
+                <element signature="e#5922#8017#0" expanded="false" />
+                <element signature="e#8075#8548#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -105,11 +88,17 @@
       <find>`</find>
       <find>3 0</find>
       <find>value</find>
+      <find>self.scale</find>
+      <find>self</find>
+      <find>consol</find>
+      <find>minX</find>
     </findStrings>
     <replaceStrings>
       <replace>0</replace>
       <replace>,</replace>
       <replace>simplex</replace>
+      <replace>var scaleX</replace>
+      <replace>scale</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -134,12 +123,14 @@
         <option value="$PROJECT_DIR$/data/tile1/tile1.cps.txt" />
         <option value="$PROJECT_DIR$/data/tile1/tile1.faces.txt" />
         <option value="$PROJECT_DIR$/data/tile1/tile1.tree.json" />
-        <option value="$PROJECT_DIR$/public/js/main.js" />
         <option value="$PROJECT_DIR$/public/js/drawVF.js" />
         <option value="$PROJECT_DIR$/public/js/drawTree.js" />
         <option value="$PROJECT_DIR$/public/js/drawContour.js" />
-        <option value="$PROJECT_DIR$/public/css/index.css" />
+        <option value="$PROJECT_DIR$/public/js/drawMiniVF.js" />
+        <option value="$PROJECT_DIR$/public/js/main.js" />
         <option value="$PROJECT_DIR$/index.html" />
+        <option value="$PROJECT_DIR$/public/js/manager.js" />
+        <option value="$PROJECT_DIR$/public/css/index.css" />
       </list>
     </option>
   </component>
@@ -169,8 +160,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -215,8 +204,24 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EnsembleVectorFieldVisualization" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EnsembleVectorFieldVisualization" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="img" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -329,18 +334,18 @@
       <workItem from="1492800563794" duration="1312000" />
       <workItem from="1492822013494" duration="5361000" />
       <workItem from="1492888836559" duration="5520000" />
-      <workItem from="1492967701878" duration="10156000" />
+      <workItem from="1492967701878" duration="13507000" />
+      <workItem from="1492986248821" duration="1173000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="22349000" />
+    <option name="totallyTimeSpent" value="26873000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="710" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -369,6 +374,49 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/public/css/index.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="870">
+          <caret line="58" column="1" lean-forward="false" selection-start-line="58" selection-start-column="1" selection-end-line="58" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="900">
+          <caret line="60" column="0" lean-forward="true" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
+          <folding>
+            <element signature="n#style#0;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/manager.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="720">
+          <caret line="48" column="24" lean-forward="false" selection-start-line="48" selection-start-column="24" selection-end-line="48" selection-end-column="24" />
+          <folding>
+            <element signature="n#!!doc;n#Manager#0" expanded="false" />
+            <element signature="n#!!block;n#Manager#0" expanded="false" />
+            <element signature="e#263#1344#0" expanded="false" />
+            <element signature="e#1421#1669#0" expanded="false" />
+            <element signature="e#1729#3695#0" expanded="false" />
+            <element signature="e#3760#5855#0" expanded="false" />
+            <element signature="e#5922#8017#0" expanded="false" />
+            <element signature="e#8075#8548#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="735">
+          <caret line="49" column="20" lean-forward="false" selection-start-line="49" selection-start-column="20" selection-end-line="49" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="435">
@@ -573,7 +621,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
           <caret line="9" column="4" lean-forward="false" selection-start-line="9" selection-start-column="4" selection-end-line="9" selection-end-column="4" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -591,22 +638,31 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="292">
           <caret line="129" column="35" lean-forward="false" selection-start-line="129" selection-start-column="35" selection-end-line="129" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/drawMiniVF.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-374">
+          <caret line="38" column="33" lean-forward="true" selection-start-line="38" selection-start-column="33" selection-end-line="38" selection-end-column="33" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/drawVF.js">
+    <entry file="file://$PROJECT_DIR$/public/js/drawTree.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="201">
-          <caret line="33" column="42" lean-forward="false" selection-start-line="33" selection-start-column="42" selection-end-line="33" selection-end-column="42" />
-          <folding />
+        <state relative-caret-position="165">
+          <caret line="13" column="41" lean-forward="true" selection-start-line="13" selection-start-column="4" selection-end-line="13" selection-end-column="41" />
+          <folding>
+            <element signature="n#!!doc;n#DrawTree#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/js/drawContour.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="570">
-          <caret line="40" column="43" lean-forward="false" selection-start-line="40" selection-start-column="43" selection-end-line="40" selection-end-column="43" />
+        <state relative-caret-position="1605">
+          <caret line="109" column="0" lean-forward="true" selection-start-line="109" selection-start-column="0" selection-end-line="109" selection-end-column="0" />
           <folding>
             <element signature="n#!!doc;n#DrawContour#0" expanded="false" />
           </folding>
@@ -615,36 +671,51 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="52" column="79" lean-forward="false" selection-start-line="52" selection-start-column="79" selection-end-line="52" selection-end-column="79" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/drawTree.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="290">
-          <caret line="22" column="17" lean-forward="true" selection-start-line="22" selection-start-column="17" selection-end-line="22" selection-end-column="17" />
-          <folding>
-            <element signature="n#!!doc;n#DrawTree#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/css/index.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="58" column="1" lean-forward="false" selection-start-line="58" selection-start-column="1" selection-end-line="58" selection-end-column="1" />
+        <state relative-caret-position="621">
+          <caret line="47" column="71" lean-forward="false" selection-start-line="47" selection-start-column="71" selection-end-line="47" selection-end-column="71" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="95">
-          <caret line="30" column="8" lean-forward="false" selection-start-line="30" selection-start-column="8" selection-end-line="30" selection-end-column="8" />
+        <state relative-caret-position="408">
+          <caret line="42" column="29" lean-forward="false" selection-start-line="42" selection-start-column="17" selection-end-line="42" selection-end-column="29" />
           <folding>
             <element signature="n#style#0;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/css/index.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="14" lean-forward="false" selection-start-line="3" selection-start-column="14" selection-end-line="3" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/drawVF.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1214">
+          <caret line="95" column="49" lean-forward="true" selection-start-line="95" selection-start-column="6" selection-end-line="95" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/manager.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="201" column="64" lean-forward="false" selection-start-line="201" selection-start-column="64" selection-end-line="201" selection-end-column="64" />
+          <folding>
+            <element signature="n#!!doc;n#Manager#0" expanded="false" />
+            <element signature="n#!!block;n#Manager#0" expanded="false" />
+            <element signature="e#263#1344#0" expanded="false" />
+            <element signature="e#1421#1669#0" expanded="false" />
+            <element signature="e#1729#3695#0" expanded="false" />
+            <element signature="e#3760#5855#0" expanded="false" />
+            <element signature="e#5922#8017#0" expanded="false" />
+            <element signature="e#8075#8548#0" expanded="false" />
           </folding>
         </state>
       </provider>

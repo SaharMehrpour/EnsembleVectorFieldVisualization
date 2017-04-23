@@ -1,7 +1,7 @@
 /* Header */
 
 #header {
-    width: 2000px;
+    width: 1850px;
     height: 50px;
     background-color: #545454;
 }
@@ -11,6 +11,7 @@
     background-color: #545454;
     padding-left: 10px;
     color: whitesmoke;
+    cursor: pointer;
 }
 
 #title {
@@ -128,6 +129,17 @@
 
 #indi_contour_div svg .arrows {
     stroke-width: 5px;
+}
+
+/*---*/
+
+#indi_lic_div {
+    padding-top: 30px;
+}
+
+#indi_lic_div img {
+    max-width: 440px;
+    max-height: 540px;
 }
 
 /* Compare Div */
