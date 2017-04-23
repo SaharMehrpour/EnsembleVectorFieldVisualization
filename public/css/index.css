@@ -1,6 +1,5 @@
-line {
-    stroke: black;
-    stroke-width: 2px;
+#vf_svg line {
+    stroke-width: 5px;
 }
 
 svg {
@@ -9,7 +8,6 @@ svg {
 }
 
 .cps {
-    fill: forestgreen;
     opacity: 0.5;
     stroke: forestgreen;
     stroke-width: 5px;
@@ -24,4 +22,30 @@ svg {
     float: left;
     padding: 5px;
     margin-top: 45px;
+}
+
+marker > path {
+    fill: #4C4C4C
+}
+
+.link {
+    stroke-width: 2px;
+    stroke: black;
+    fill: none;
+}
+
+.source {
+    fill: forestgreen;
+}
+
+.saddle {
+    fill: steelblue;
+}
+
+.sink {
+    fill: darkred;
+}
+
+.merge {
+    fill: black;
 }

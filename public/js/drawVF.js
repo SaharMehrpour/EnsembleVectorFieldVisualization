@@ -30,6 +30,10 @@ DrawVF.prototype.init = function() {
         .domain([minY, maxY])
         .range([50,650]);
 
+    self.colorScale = d3.scaleLinear()
+        .domain([0,20])
+        .range(['#ccc', '#111']);
+
 };
 
 DrawVF.prototype.draw = function () {
@@ -65,16 +69,24 @@ DrawVF.prototype.drawEnsemble = function (vf, cps, fileLocation) {
         .duration(1500)
         .attr('x2', function (d, i) {
             var x1 = self.scaleX(d.x);
-            //var x1 = d3.select(this).attr('x2');
             return x1 + vf[i].vx;
         })
         .attr('y2', function (d, i) {
             var y1 = self.scaleY(d.y);
-            //var y2 = d3.select(this).attr('y2');
             return y1 + vf[i].vy;
 
         })
-        .attr("marker-end", "url(#arrow)");
+        //.attr("marker-end", "url(#arrow)")
+        .style("stroke", function (d, i) {
+            var norm = Math.sqrt(vf[i].vx * vf[i].vx + vf[i].vy * vf[i].vy);
+            if(vf[i].norm <= 7.945)
+                return '#b91000';
+            if(vf[i].norm > 7.945 && vf[i].norm <= 8.292 )
+                return '#0500b9';
+            if(vf[i].norm > 8.292 && vf[i].norm <= 9.641 )
+                return '#208300';
+            return self.colorScale(norm);
+        });
 
 
     var cpoints = self.svg.selectAll('.cps')
@@ -97,6 +109,7 @@ DrawVF.prototype.drawEnsemble = function (vf, cps, fileLocation) {
 
     cpoints.exit().remove();
 
-    d3.select('img').attr('src', fileLocation);
+    //d3.select('img').attr('src', fileLocation);
 };
+
 
