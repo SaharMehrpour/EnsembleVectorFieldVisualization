@@ -1,51 +1,151 @@
-#vf_svg line {
-    stroke-width: 5px;
+/* Header */
+
+#header {
+    width: 2000px;
+    height: 50px;
+    background-color: #545454;
 }
 
-svg {
-    height: 700px;
-    width: 600px;
+#header > div {
+    height: 40px;
+    background-color: #545454;
+    padding-left: 10px;
+    color: whitesmoke;
 }
 
-.cps {
-    opacity: 0.5;
-    stroke: forestgreen;
-    stroke-width: 5px;
-}
-
-#svg_div {
+#title {
+    width: 300px;
+    font-size: x-large;
     float: left;
-    padding: 5px;
 }
 
-#img_div {
+#individual {
+    width: 80px;
     float: left;
-    padding: 5px;
-    margin-top: 45px;
+    text-align: center;
+    margin-top: 10px;
 }
 
-marker > path {
-    fill: #4C4C4C
+#compare {
+    width: 80px;
+    float: left;
+    text-align: center;
+    margin-top: 10px;
 }
 
-.link {
+#about {
+    width: 80px;
+    float: right;
+    text-align: center;
+    margin-top: 10px;
+}
+
+#header .active {
+    color: #ff9e9e;
+}
+
+/* Main Div*/
+.main {
+    width: 90%;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Individual Div */
+#indi_nav {
+    width: 100%;
+}
+
+#indi_dgm_div {
+    width: 2000px;
+}
+
+#indi_dgm_div > div {
+    float: left;
+}
+
+#indi_vf_div svg, #indi_contour_div svg, #indi_lic_div {
+    width: 500px;
+    height: 600px;
+}
+
+#indi_tree_div svg {
+    width: 300px;
+    height: 600px;
+}
+
+/*---*/
+
+#indi_tree_div .link {
     stroke-width: 2px;
     stroke: black;
     fill: none;
 }
 
-.source {
+#indi_tree_div .source {
     fill: forestgreen;
 }
 
-.saddle {
+#indi_tree_div .saddle {
     fill: steelblue;
 }
 
-.sink {
+#indi_tree_div .sink {
     fill: darkred;
 }
 
-.merge {
+#indi_tree_div .merge {
     fill: black;
+}
+
+/*---*/
+
+#indi_vf_div svg .arrows{
+    stroke-width: 1.5px;
+    stroke: black;
+    fill: none;
+}
+
+#indi_vf_div svg marker > path {
+    fill: #4C4C4C
+}
+
+#indi_vf_div .cps {
+    opacity: 0.5;
+    stroke: forestgreen;
+    stroke-width: 5px;
+}
+
+/*---*/
+
+#indi_contour_div .cps {
+    opacity: 0.5;
+    stroke: forestgreen;
+    stroke-width: 5px;
+}
+
+#indi_contour_div svg .arrows {
+    stroke-width: 5px;
+}
+
+/* Compare Div */
+#comp_nav {
+    width: 100%;
+}
+
+#comp_list_div {
+    width: 100%;
+}
+
+.tooltip {
+    position: absolute;
+    text-align: center;
+    padding: 5px;
+    font: 12px sans-serif;
+    background: #ddd;
+    border: 0;
+    border-radius: 8px;
+    pointer-events: none;
 }

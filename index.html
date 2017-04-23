@@ -18,38 +18,48 @@
 </head>
 
 <body>
-<div style="padding: 10px">
-    <h3> Click on one of the buttons:</h3>
-    <input type="submit" id="change_VF1" value="click VF1">
-    <input type="submit" id="change_VF2" value="click VF2">
-    <input type="submit" id="change_VF3" value="click VF3">
-    <input type="submit" id="change_VF4" value="click VF4">
-    <input type="submit" id="change_VF5" value="click VF5">
-    <input type="submit" id="change_VF6" value="click VF6">
-    <input type="submit" id="change_VF7" value="click VF7">
-    <input type="submit" id="change_VF8" value="click VF8">
+
+<div id="header">
+    <div id="title">Uncertain Visualization</div>
+    <div id="individual" class="active">Individual</div>
+    <div id="compare">Compare</div>
+    <div id="about">About</div>
 </div>
-<div>
-    <div id="svg_div">
-        <svg id="vf_svg">
+
+<div class="main" id="indi_div">
+    <div id="indi_nav">
+        
+    </div>
+    <div id="indi_dgm_div">
+        <div id="indi_vf_div"><svg>
             <defs>
                 <marker id="arrow" markerWidth="10" markerHeight="10" refX="0" refY="3" orient="auto" markerUnits="strokeWidth" viewBox="0 0 20 20">
                     <path d="M0,0 L0,6 L9,3 z" fill="#f00" />
                 </marker>
             </defs>
-        </svg>
+        </svg></div>
+        <div id="indi_contour_div"><svg></svg></div>
+        <div id="indi_tree_div"><svg></svg></div>
+        <div id="indi_lic_div"><svg></svg></div>
     </div>
-    <div id="img_div">
-        <img>
+</div>
+
+<div class="main hidden" id="comp_div">
+    <div id="comp_nav">
+        Drop Down + checkboxes
     </div>
-</div>
-<div id="tree_div">
+    <div id="comp_list_div">
+        <div id="ens1">
+            <div id="remove_ens1"><img src="img/remove.png"></div>
+            <div id="comp_vf_ens1"></div>
+            <div id="comp_lic_ens1"></div>
+        </div>
+    </div>
 
 </div>
-<div>
+<div class="tooltip" style="opacity: 0"></div>
 
-</div>
-
+<script type="application/javascript" src="public/js/drawContour.js"></script>
 <script type="application/javascript" src="public/js/drawTree.js"></script>
 <script type="application/javascript" src="public/js/drawVF.js"></script>
 <script type="application/javascript" src="public/js/main.js"></script>

@@ -15,7 +15,7 @@
             .defer(d3.json, "data/tile1/tile1.tree.json")
             .await(function (error, faces, verts, cps, vf, treeData) {
                 if (error) {
-                    console.error('Oh dear, something went wrong: ' + error);
+                    console.error('Error in reading the data ' + error);
                 }
                 else {
 
@@ -44,11 +44,13 @@
                         d.norm = Math.sqrt(d.vx * d.vx + d.vy * d.vy)
                     });
 
-                    var draw_vf = new DrawVF(verts, faces);
-                    draw_vf.draw();
-                    draw_vf.drawEnsemble(vf, cps, 'img/img1.png');
+                    var draw_vf = new DrawVF("#indi_vf_div", verts, faces);
+                    draw_vf.draw(vf, cps, 'img/img1.png');
 
-                    var draw_tree = new DrawTree();
+                    var draw_contour = new DrawContour("#indi_contour_div", verts, faces);
+                    draw_contour.draw(vf, cps);
+
+                    var draw_tree = new DrawTree("#indi_tree_div", draw_contour);
                     draw_tree.draw(treeData);
                 }
             });

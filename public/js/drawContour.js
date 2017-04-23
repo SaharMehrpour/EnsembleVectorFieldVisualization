@@ -1,9 +1,8 @@
 /**
- * Created by saharmehrpour on 4/20/17.
+ * Created by saharmehrpour on 4/23/17.
  */
 
-
-function DrawVF(parentID, verts, faces) {
+function DrawContour(parentID, verts, faces) {
     var self = this;
 
     self.verts = verts;
@@ -11,27 +10,35 @@ function DrawVF(parentID, verts, faces) {
     self.svg = d3.select(parentID).select("svg");
 
     self.init();
-
 }
 
-DrawVF.prototype.init = function() {
+
+DrawContour.prototype.init = function () {
     var self = this;
 
-    var maxX = d3.max(self.verts, function (d) { return d.x; });
-    var minX = d3.min(self.verts, function (d) { return d.x; });
-    var maxY = d3.max(self.verts, function (d) { return d.y; });
-    var minY = d3.min(self.verts, function (d) { return d.y; });
+    var maxX = d3.max(self.verts, function (d) {
+        return d.x;
+    });
+    var minX = d3.min(self.verts, function (d) {
+        return d.x;
+    });
+    var maxY = d3.max(self.verts, function (d) {
+        return d.y;
+    });
+    var minY = d3.min(self.verts, function (d) {
+        return d.y;
+    });
 
     self.scaleX = d3.scaleLinear()
         .domain([minX, maxX])
-        .range([30,470]);
+        .range([30, 470]);
 
     self.scaleY = d3.scaleLinear()
         .domain([minY, maxY])
-        .range([30,570]);
+        .range([30, 570]);
 
     self.colorScale = d3.scaleLinear()
-        .domain([0,20]) // TODO generalize
+        .domain([0, 20]) // TODO generalize
         .range(['#ccc', '#111']);
 
     var arrows = self.svg.selectAll('.arrows')
@@ -54,8 +61,10 @@ DrawVF.prototype.init = function() {
 
 };
 
-DrawVF.prototype.draw = function (vf, cps, fileLocation) {
+DrawContour.prototype.draw = function (vf, cps) {
     var self = this;
+
+    self.vf = vf;
 
     self.svg.selectAll('.arrows')
         .transition()
@@ -69,10 +78,12 @@ DrawVF.prototype.draw = function (vf, cps, fileLocation) {
             return y1 + vf[i].vy;
 
         })
-        .attr("marker-end", "url(#arrow)");
+        .style("stroke", function (d, i) {
+            var norm = Math.sqrt(vf[i].vx * vf[i].vx + vf[i].vy * vf[i].vy);
+            return self.colorScale(norm);
+        });
 
-    // TODO fix this:
-
+// TODO: fix this:
     var cpoints = self.svg.selectAll('.cps')
         .data(cps);
 
@@ -92,8 +103,21 @@ DrawVF.prototype.draw = function (vf, cps, fileLocation) {
         });
 
     cpoints.exit().remove();
-
-    //d3.select('img').attr('src', fileLocation);
 };
 
+DrawContour.prototype.changeContour = function (value) {
+    var self = this;
+
+    self.svg.selectAll('.arrows')
+        .transition()
+        .duration(1000)
+        .style("stroke", function (d, i) {
+            var norm = Math.sqrt(self.vf[i].vx * self.vf[i].vx + self.vf[i].vy * self.vf[i].vy);
+            if (norm <= value){
+                return "#b91000";
+            }
+            return self.colorScale(norm);
+        });
+
+};
 
