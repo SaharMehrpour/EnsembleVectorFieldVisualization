@@ -6,13 +6,13 @@
      * the classes are defined in the respective javascript files.
      */
     function init() {
-
+/*
         d3.queue()
             .defer(d3.csv, "data/tile1/tile1.faces.txt")
             .defer(d3.csv, "data/tile1/tile1.verts.txt")
             .defer(d3.csv, "data/tile1/tile1.cps.txt")
             .defer(d3.csv, "data/tile1/tile1.vf.txt")
-            .defer(d3.json, "data/tile1/tile1.tree.json")
+            .defer(d3.csv, "data/tile1/treeData.txt")
             .await(function (error, faces, verts, cps, vf, treeData) {
                 if (error) {
                     console.error('Error in reading the data ' + error);
@@ -51,7 +51,7 @@
                 }
             });
 
-        /*
+        */
 
         d3.queue()
             .defer(d3.csv, "data/tris.txt")
@@ -75,10 +75,9 @@
             .await(function (error, faces, verts, cps1, vf1, cps2, vf2, cps3, vf3, cps4, vf4,
                              cps5, vf5, cps6, vf6, cps7, vf7, cps8, vf8) {
                 if (error) {
-                    console.error('Oh dear, something went wrong: ' + error);
+                    console.error('Error in reading the data: ' + error);
                 }
                 else {
-
 
                     verts.forEach(function (d) {
                         d.x = +d['X'];
@@ -97,6 +96,9 @@
 
                     cps1.forEach(function (d) {
                         d.simplexIndex = +d['SIMPLEX'] - 1;
+                        d.type = d['TYPE'];
+                        d.robustness = +d['ROBUSTNESS'];
+
                     });
 
                     vf1.forEach(function (d) {
@@ -106,6 +108,8 @@
 
                     cps2.forEach(function (d) {
                         d.simplexIndex = +d['SIMPLEX'] - 1;
+                        d.type = d['TYPE'];
+                        d.robustness = +d['ROBUSTNESS'];
                     });
 
                     vf2.forEach(function (d) {
@@ -115,6 +119,8 @@
 
                     cps3.forEach(function (d) {
                         d.simplexIndex = +d['SIMPLEX'] - 1;
+                        d.type = d['TYPE'];
+                        d.robustness = +d['ROBUSTNESS'];
                     });
 
                     vf3.forEach(function (d) {
@@ -124,6 +130,8 @@
 
                     cps4.forEach(function (d) {
                         d.simplexIndex = +d['SIMPLEX'] - 1;
+                        d.type = d['TYPE'];
+                        d.robustness = +d['ROBUSTNESS'];
                     });
 
                     vf4.forEach(function (d) {
@@ -133,6 +141,8 @@
 
                     cps5.forEach(function (d) {
                         d.simplexIndex = +d['SIMPLEX'] - 1;
+                        d.type = d['TYPE'];
+                        d.robustness = +d['ROBUSTNESS'];
                     });
 
                     vf5.forEach(function (d) {
@@ -142,6 +152,8 @@
 
                     cps6.forEach(function (d) {
                         d.simplexIndex = +d['SIMPLEX'] - 1;
+                        d.type = d['TYPE'];
+                        d.robustness = +d['ROBUSTNESS'];
                     });
 
                     vf6.forEach(function (d) {
@@ -151,6 +163,8 @@
 
                     cps7.forEach(function (d) {
                         d.simplexIndex = +d['SIMPLEX'] - 1;
+                        d.type = d['TYPE'];
+                        d.robustness = +d['ROBUSTNESS'];
                     });
 
                     vf7.forEach(function (d) {
@@ -160,6 +174,8 @@
 
                     cps8.forEach(function (d) {
                         d.simplexIndex = +d['SIMPLEX'] - 1;
+                        d.type = d['TYPE'];
+                        d.robustness = +d['ROBUSTNESS'];
                     });
 
                     vf8.forEach(function (d) {
@@ -167,47 +183,25 @@
                         d.vy = +d['V'];
                     });
 
+                    var ensData = [
+                        {"id": 1, "vf": vf1, "cps":cps1, "treeData":[], "fileLocation": "img/img1.png"},
+                        {"id": 2, "vf": vf2, "cps":cps2, "treeData":[], "fileLocation": "img/img2.png"},
+                        {"id": 3, "vf": vf3, "cps":cps3, "treeData":[], "fileLocation": "img/img3.png"},
+                        {"id": 4, "vf": vf4, "cps":cps4, "treeData":[], "fileLocation": "img/img4.png"},
+                        {"id": 5, "vf": vf5, "cps":cps5, "treeData":[], "fileLocation": "img/img5.png"},
+                        {"id": 6, "vf": vf6, "cps":cps6, "treeData":[], "fileLocation": "img/img6.png"},
+                        {"id": 7, "vf": vf7, "cps":cps7, "treeData":[], "fileLocation": "img/img7.png"},
+                        {"id": 8, "vf": vf8, "cps":cps8, "treeData":[], "fileLocation": "img/img8.png"},
+                    ];
 
-                    var draw_vf = new DrawVF(verts, faces);
 
-                    d3.select('#change_VF1').on('click', function () {
-                        draw_vf.drawEnsemble(vf1, cps1, 'img/img1.png');
-                    });
-
-                    d3.select('#change_VF2').on('click', function () {
-                        draw_vf.drawEnsemble(vf2, cps2, 'img/img2.png');
-                    });
-
-                    d3.select('#change_VF3').on('click', function () {
-                        draw_vf.drawEnsemble(vf3, cps3, 'img/img3.png');
-                    });
-
-                    d3.select('#change_VF4').on('click', function () {
-                        draw_vf.drawEnsemble(vf4, cps4, 'img/img4.png');
-                    });
-
-                    d3.select('#change_VF5').on('click', function () {
-                        draw_vf.drawEnsemble(vf5, cps5, 'img/img5.png');
-                    });
-
-                    d3.select('#change_VF6').on('click', function () {
-                        draw_vf.drawEnsemble(vf6, cps6, 'img/img5.png');
-                    });
-
-                    d3.select('#change_VF7').on('click', function () {
-                        draw_vf.drawEnsemble(vf7, cps7, 'img/img5.png');
-                    });
-
-                    d3.select('#change_VF8').on('click', function () {
-                        draw_vf.drawEnsemble(vf8, cps8, 'img/img5.png');
-                    });
-
-                    draw_vf.draw();
-
+                    var manager = new Manager(verts, faces, ensData);
+                    //manager.individual(vf1, cps1, [], "img/img1.png");
+                    //manager.compare("ens1", vf1, cps1, [], "img/img1.png")
 
                 }
             });
-            */
+
 
     }
 

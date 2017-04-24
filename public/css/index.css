@@ -36,7 +36,7 @@
 
 #about {
     width: 80px;
-    float: right;
+    float: left;
     text-align: center;
     margin-top: 10px;
 }
@@ -56,6 +56,9 @@
     pointer-events: none;
 }
 
+#about_div {
+    padding: 30px;
+}
 
 /* Main Div*/
 .main {
@@ -127,17 +130,17 @@
 }
 
 #indi_vf_div .cps {
-    opacity: 0.5;
+    opacity: 1;
+    fill: forestgreen;
     stroke: forestgreen;
-    stroke-width: 5px;
 }
 
 /*---*/
 
 #indi_contour_div .cps {
-    opacity: 0.5;
+    opacity: 1;
+    fill: forestgreen;
     stroke: forestgreen;
-    stroke-width: 5px;
 }
 
 #indi_contour_div svg .arrows {
@@ -197,6 +200,12 @@
     stroke-width: 1.5px;
     stroke: black;
     fill: none;
+}
+
+#comp_list_div svg .cps {
+    opacity: 1;
+    fill: forestgreen;
+    stroke: forestgreen;
 }
 
 #comp_list_div .tree_diagram svg .link {

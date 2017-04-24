@@ -20,6 +20,8 @@ Manager.prototype.init = function() {
     self.indiDiv = d3.select("#indi_div");
     self.compTab = d3.select("#compare");
     self.compDiv = d3.select("#comp_div");
+    self.aboutTab = d3.select("#about");
+    self.aboutDiv = d3.select("#about_div");
 
     self.indiTab.on("click", function () {
         d3.select("#header").selectAll("div").classed("active", false);
@@ -35,8 +37,15 @@ Manager.prototype.init = function() {
         self.compTab.classed("active", true);
     });
 
+    self.aboutTab.on("click", function () {
+        d3.select("#header").selectAll("div").classed("active", false);
+        d3.selectAll(".main").classed("hidden", true);
+        self.aboutDiv.classed("hidden", false);
+        self.aboutTab.classed("active", true);
+    });
+
     d3.select("#ens_drop_down_indi").selectAll("option")
-        .data([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15])
+        .data([1,2,3,4,5,6,7,8])
         .enter()
         .append("option")
         .attr("value", function (d) {
@@ -45,17 +54,18 @@ Manager.prototype.init = function() {
         .text(function (d) {
             return "Ensemble " + d
         });
-/*
+
     d3.select("#ens_drop_down_indi").on("change", function () {
-        var ensNumber = document.getElementById("ens_drop_down_indi").value;
-        //self.individual(self.ensData[ensNumber].vf, self.ensData[ensNumber].cps,
-        //    self.ensData[ensNumber].treeData, self.ensData[ensNumber].fileLacation)
+        var ensNumber = +document.getElementById("ens_drop_down_indi").value;
+
+        self.individual(self.ensData[ensNumber-1].vf, self.ensData[ensNumber-1].cps,
+            self.ensData[ensNumber-1].treeData, self.ensData[ensNumber-1].fileLocation)
 
     });
 
-*/
+
     d3.select("#ens_drop_down_comp").selectAll("option")
-        .data([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15])
+        .data([1,2,3,4,5,6,7,8])
         .enter()
         .append("option")
         .attr("value", function (d) {
@@ -64,22 +74,21 @@ Manager.prototype.init = function() {
         .text(function (d) {
             return "Ensemble " + d
         });
-/*
+
     d3.select("#ens_drop_down_comp").on("change", function () {
-        var ensNumber = document.getElementById("ens_drop_down_comp").value;
+        var ensNumber = +document.getElementById("ens_drop_down_comp").value;
         var ensDiv = d3.selectAll("#ens" + ensNumber);
         if (ensDiv.size() === 0) {
-            //self.compare("ens" + ensNumber, self.ensData[ensNumber].vf,
-            //    self.ensData[ensNumber].cps, self.ensData[ensNumber].treeData
-            // , self.ensData[ensNumber].fileLocation)
+            self.compare("ens" + ensNumber, self.ensData[ensNumber-1].vf,
+                self.ensData[ensNumber-1].cps, self.ensData[ensNumber-1].treeData
+             , self.ensData[ensNumber-1].fileLocation)
 
-            self.compare("ens" + ensNumber, [], [], [], [])
         }
         else {
             console.log("The ensemble already exists");
         }
     });
- */
+
 
     // Global values:
     self.maxX = d3.max(self.verts, function (d) { return d.x; });
@@ -98,7 +107,7 @@ Manager.prototype.individual = function (vf, cps, treeData, fileLocation) {
 
     self.drawVF("#indi_vf_div", vf, cps);
     self.drawContour("#indi_contour_div", vf, cps);
-    self.drawTree("#indi_tree_div", treeData, vf);
+    //self.drawTree("#indi_tree_div", treeData, vf);
 
     d3.select("#indi_lic_div").select("img").attr('src', fileLocation);
     
@@ -138,6 +147,7 @@ Manager.prototype.drawVF = function (parentDIV, vf, cps) {
         .attr('y2', function (d) {
             return scaleY(d.y);
         })
+        .merge(arrows)
         .transition()
         .duration(1500)
         .attr('x2', function (d, i) {
@@ -156,20 +166,18 @@ Manager.prototype.drawVF = function (parentDIV, vf, cps) {
         .selectAll('.cps')
         .data(cps);
 
-    cpoints.enter().append('path')
+    cpoints.enter().append('circle')
         .classed('cps', true)
         .merge(cpoints)
         //.transition()
         //.duration(1500)
-        .attr('d', function (d) {
-            var v1x = scaleX(self.faces[d.simplexIndex].v1x);
-            var v2x = scaleX(self.faces[d.simplexIndex].v2x);
-            var v3x = scaleX(self.faces[d.simplexIndex].v3x);
-            var v1y = scaleY(self.faces[d.simplexIndex].v1y);
-            var v2y = scaleY(self.faces[d.simplexIndex].v2y);
-            var v3y = scaleY(self.faces[d.simplexIndex].v3y);
-            return 'M' + v1x + ' ' + v1y + ' L' + v2x + ' ' + v2y + ' L' + v3x + ' ' + v3y + ' Z';
-        });
+        .attr('cx', function (d) {
+            return scaleX(self.faces[d.simplexIndex].v1x);
+        })
+        .attr('cy', function (d) {
+            return scaleY(self.faces[d.simplexIndex].v1y);
+        })
+        .attr('r', 5);
 
     cpoints.exit().remove();
 };
@@ -208,6 +216,7 @@ Manager.prototype.drawContour = function (parentDIV, vf, cps) {
         .attr('y2', function (d) {
             return scaleY(d.y);
         })
+        .merge(arrows)
         .transition()
         .duration(1500)
         .attr('x2', function (d, i) {
@@ -229,20 +238,18 @@ Manager.prototype.drawContour = function (parentDIV, vf, cps) {
         .selectAll('.cps')
         .data(cps);
 
-    cpoints.enter().append('path')
+    cpoints.enter().append('circle')
         .classed('cps', true)
         .merge(cpoints)
         //.transition()
         //.duration(1500)
-        .attr('d', function (d) {
-            var v1x = scaleX(self.faces[d.simplexIndex].v1x);
-            var v2x = scaleX(self.faces[d.simplexIndex].v2x);
-            var v3x = scaleX(self.faces[d.simplexIndex].v3x);
-            var v1y = scaleY(self.faces[d.simplexIndex].v1y);
-            var v2y = scaleY(self.faces[d.simplexIndex].v2y);
-            var v3y = scaleY(self.faces[d.simplexIndex].v3y);
-            return 'M' + v1x + ' ' + v1y + ' L' + v2x + ' ' + v2y + ' L' + v3x + ' ' + v3y + ' Z';
-        });
+        .attr('cx', function (d) {
+            return scaleX(self.faces[d.simplexIndex].v1x);
+        })
+        .attr('cy', function (d) {
+            return scaleY(self.faces[d.simplexIndex].v1y);
+        })
+        .attr('r', 5);
 
     cpoints.exit().remove();
 };
@@ -250,10 +257,20 @@ Manager.prototype.drawContour = function (parentDIV, vf, cps) {
 Manager.prototype.drawTree = function (parentDIV, treeData, vf) {
     var self = this;
 
+    var root = d3.stratify()
+        .id(function (d) {
+            return +d.ID;
+        })
+        .parentId(function (d) {
+            if (d.PARENT === "") return;
+            return d.PARENT;
+        })
+        (treeData);
+
     var treemap = d3.cluster()
         .size([270, 550]);
 
-    var nodes = d3.hierarchy(treeData, function (d) {
+    var nodes = d3.hierarchy(root, function (d) {
         return d.children;
     });
 
@@ -287,14 +304,14 @@ Manager.prototype.drawTree = function (parentDIV, treeData, vf) {
         .attr("cx", 0)
         .attr("cr", 0)
         .attr("class", function (d) {
-            return d.data.type;
+            return d.data.data.TYPE;
         })
         .on("click", function (d) {
             var selected = d3.select(this).classed("selected");
             group.selectAll("circle").classed("selected", false);
             d3.select(this).classed("selected", !selected);
             if (!selected) {
-                self.changeContour(d.data.value, vf)
+                self.changeContour(d.data.data.VALUE, vf)
             }
             else {
                 self.changeContour(0, vf)
@@ -305,7 +322,7 @@ Manager.prototype.drawTree = function (parentDIV, treeData, vf) {
                 .duration(200)
                 .style("opacity", 1);
             self.tooltip.html(function () {
-                return d.data.type + " "+ d.data.value;
+                return d.data.data.TYPE + " "+ d.data.data.VALUE;
             })
                 .style("left", (d3.event.pageX) + "px")
                 .style("top", (d3.event.pageY - 28) + "px");
@@ -361,7 +378,7 @@ Manager.prototype.compare = function (divID, vf, cps, treeData, fileLocation) {
 
     //self.compDrawVF("#comp_vf_" + divID, vf, cps);
     self.compDrawContour("#comp_contour_" + divID, vf, cps);
-    self.compDrawTree("#comp_tree_" + divID, treeData);
+    //self.compDrawTree("#comp_tree_" + divID, treeData);
 
 };
 
@@ -417,20 +434,18 @@ Manager.prototype.compDrawVF = function (parentDIV, vf, cps) {
         .selectAll('.cps')
         .data(cps);
 
-    cpoints.enter().append('path')
+    cpoints.enter().append('circle')
         .classed('cps', true)
         .merge(cpoints)
         //.transition()
         //.duration(1500)
-        .attr('d', function (d) {
-            var v1x = scaleX(self.faces[d.simplexIndex].v1x);
-            var v2x = scaleX(self.faces[d.simplexIndex].v2x);
-            var v3x = scaleX(self.faces[d.simplexIndex].v3x);
-            var v1y = scaleY(self.faces[d.simplexIndex].v1y);
-            var v2y = scaleY(self.faces[d.simplexIndex].v2y);
-            var v3y = scaleY(self.faces[d.simplexIndex].v3y);
-            return 'M' + v1x + ' ' + v1y + ' L' + v2x + ' ' + v2y + ' L' + v3x + ' ' + v3y + ' Z';
-        });
+        .attr('cx', function (d) {
+            return scaleX(self.faces[d.simplexIndex].v1x);
+        })
+        .attr('cy', function (d) {
+            return scaleY(self.faces[d.simplexIndex].v1y);
+        })
+        .attr('r', 5);
 
     cpoints.exit().remove();
 };
@@ -482,20 +497,18 @@ Manager.prototype.compDrawContour = function (parentDIV, vf, cps) {
         .selectAll('.cps')
         .data(cps);
 
-    cpoints.enter().append('path')
+    cpoints.enter().append('circle')
         .classed('cps', true)
         .merge(cpoints)
         //.transition()
         //.duration(1500)
-        .attr('d', function (d) {
-            var v1x = scaleX(self.faces[d.simplexIndex].v1x);
-            var v2x = scaleX(self.faces[d.simplexIndex].v2x);
-            var v3x = scaleX(self.faces[d.simplexIndex].v3x);
-            var v1y = scaleY(self.faces[d.simplexIndex].v1y);
-            var v2y = scaleY(self.faces[d.simplexIndex].v2y);
-            var v3y = scaleY(self.faces[d.simplexIndex].v3y);
-            return 'M' + v1x + ' ' + v1y + ' L' + v2x + ' ' + v2y + ' L' + v3x + ' ' + v3y + ' Z';
-        });
+        .attr('cx', function (d) {
+            return scaleX(self.faces[d.simplexIndex].v1x);
+        })
+        .attr('cy', function (d) {
+            return scaleY(self.faces[d.simplexIndex].v1y);
+        })
+        .attr('r', 5);
 
     cpoints.exit().remove();
 };
@@ -503,10 +516,20 @@ Manager.prototype.compDrawContour = function (parentDIV, vf, cps) {
 Manager.prototype.compDrawTree = function (parentDIV, treeData) {
     var self = this;
 
+    var root = d3.stratify()
+        .id(function (d) {
+            return +d.ID;
+        })
+        .parentId(function (d) {
+            if (d.PARENT === "") return;
+            return d.PARENT;
+        })
+        (treeData);
+    
     var treemap = d3.cluster()
         .size([220, 320]);
 
-    var nodes = d3.hierarchy(treeData, function (d) {
+    var nodes = d3.hierarchy(root, function (d) {
         return d.children;
     });
 
@@ -540,14 +563,14 @@ Manager.prototype.compDrawTree = function (parentDIV, treeData) {
         .attr("cx", 0)
         .attr("cr", 0)
         .attr("class", function (d) {
-            return d.data.type;
+            return d.data.data.TYPE;
         })
         .on("mouseover", function (d) {
             self.tooltip.transition()
                 .duration(200)
                 .style("opacity", 1);
             self.tooltip.html(function () {
-                return d.data.type + " "+ d.data.value;
+                return d.data.data.TYPE + " "+ d.data.data.VALUE;
             })
                 .style("left", (d3.event.pageX) + "px")
                 .style("top", (d3.event.pageY - 28) + "px");
