@@ -46,6 +46,7 @@
 
                     var manager = new Manager(verts, faces, []);
                     manager.individual(vf, cps, treeData, "img/img1.png");
+                    manager.compare("ens1", vf, cps, treeData, "img/img1.png")
 
                 }
             });

@@ -2,12 +2,12 @@
 <html lang="en">
 
 <head>
-<meta charset="utf-8">
-<title>Ensemble VF Vis</title>
+    <meta charset="utf-8">
+    <meta http-equiv="pragma" content="no-cache, no-store, must-revalidate" />
+    <title>Ensemble VF Vis</title>
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
     <link rel="stylesheet" href="public/css/index.css" type="text/css">
-
     <script type="text/javascript" src="bower_components/d3/d3.js"></script>
     <script type="text/javascript" src="bower_components/d3-tip/index.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -28,7 +28,8 @@
 
 <div class="main" id="indi_div">
     <div id="indi_nav">
-
+        Select the ensemble to be shown here. </br>
+        <select name="Ensemble" id="ens_drop_down_indi"></select>
     </div>
     <div id="indi_dgm_div">
         <div id="indi_vf_div"><svg>
@@ -46,14 +47,20 @@
 
 <div class="main hidden" id="comp_div">
     <div id="comp_nav">
-        Drop Down + checkboxes
+        Select the ensemble to be shown here. To remove the ensemble diagrams, click on the remove button on the left.
+        </br>
+        <select name="Ensemble" id="ens_drop_down_comp"></select>
     </div>
     <div id="comp_list_div">
+        <!--
         <div id="ens1">
-            <div id="remove_ens1"><img src="img/remove.png"></div>
-            <div id="comp_vf_ens1"></div>
+            <div class="icon" id="remove_ens1"><img src="img/remove.png"></div>
+            <div id="comp_vf_ens1"><svg></svg></div>
+            <div id="comp_contour_ens1"><svg></svg></div>
+            <div id="comp_tree_ens1"><svg></svg></div>
             <div id="comp_lic_ens1"></div>
         </div>
+        -->
     </div>
 
 </div>
