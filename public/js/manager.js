@@ -9,6 +9,9 @@ function Manager(verts, faces, ensData) {
     self.verts = verts;
     self.faces = faces;
 
+    self.sinkSymbol = "M 4 0 L 8 4 L 12 0 L 16 4 L 12 8 L 16 12 L 12 16 L 8 12 L 4 16 L 0 12 L 4 8 L 0 4 Z";
+    self.saddleSymbol = "M 0 6 S 7 7 6 0 L 10 0 S 9 7 16 6 L 16 10 S 9 9 11 16 L 6 16 S 7 9 0 10 Z";
+
     self.init();
 }
 
@@ -105,9 +108,9 @@ Manager.prototype.init = function() {
 Manager.prototype.individual = function (vf, cps, treeData, fileLocation) {
     var self = this;
 
-    self.drawVF("#indi_vf_div", vf, cps);
-    self.drawContour("#indi_contour_div", vf, cps);
-    //self.drawTree("#indi_tree_div", treeData, vf);
+    self.drawVF("#indi_vf_div", vf, treeData);
+    self.drawContour("#indi_contour_div", vf, treeData);
+    self.drawTree("#indi_tree_div", treeData, vf);
 
     d3.select("#indi_lic_div").select("img").attr('src', fileLocation);
     
@@ -151,16 +154,100 @@ Manager.prototype.drawVF = function (parentDIV, vf, cps) {
         .transition()
         .duration(1500)
         .attr('x2', function (d, i) {
+            var norm = Math.sqrt(vf[i].vx * vf[i].vx + vf[i].vy * vf[i].vy)/5;
             var x1 = scaleX(d.x);
-            return x1 + vf[i].vx;
+            return x1 + vf[i].vx/norm;
         })
         .attr('y2', function (d, i) {
+            var norm = Math.sqrt(vf[i].vx * vf[i].vx + vf[i].vy * vf[i].vy)/5;
             var y1 = scaleY(d.y);
-            return y1 + vf[i].vy;
+            return y1 + vf[i].vy/norm;
 
         })
         .attr("marker-end", "url(#arrow)");
 
+    console.log(cps);
+    var sourceCP = cps.filter(function (d) { return d.TYPE === 'source' });
+    var sinkCP = cps.filter(function (d) { return d.TYPE === 'sink' });
+    var saddleCP = cps.filter(function (d) { return d.TYPE === 'saddle' });
+
+    var sourcePoints = d3.select(parentDIV)
+        .select("svg")
+        .selectAll('.source')
+        .data(sourceCP);
+
+    sourcePoints.enter().append('circle')
+        .classed('source', true)
+        .attr('cx', function (d) {
+            return scaleX(self.faces[d.simplexIndex].v1x);
+        })
+        .attr('cy', function (d) {
+            return scaleY(self.faces[d.simplexIndex].v1y);
+        })
+        .attr('r', 0)
+        .merge(sourcePoints)
+        .transition()
+        .duration(1500)
+        .attr('cx', function (d) {
+            return scaleX(self.faces[d.simplexIndex].v1x);
+        })
+        .attr('cy', function (d) {
+            return scaleY(self.faces[d.simplexIndex].v1y);
+        })
+        .attr('r', 5);
+
+    sourcePoints.exit().remove();
+
+    var sinkPoints = d3.select(parentDIV)
+        .select("svg")
+        .selectAll('.sink')
+        .data(sinkCP)
+        .enter().append('g')
+        .classed('sink', true)
+        .attr('transform',"translate(0,0)")
+        .append('path')
+        .attr('d', this.sinkSymbol);
+
+    sinkPoints.exit().remove();
+
+    d3.select(parentDIV)
+        .select("svg")
+        .selectAll('.sink')
+        .data(sinkCP)
+        .transition()
+        .duration(1500)
+        .attr('transform',function (d) {
+            var x0 = scaleX(self.faces[d.simplexIndex].v1x);
+            var y0 = scaleY(self.faces[d.simplexIndex].v1y);
+            return 'translate(' + x0 + ',' + y0 + ')';
+        });
+
+
+    var saddlePoints = d3.select(parentDIV)
+        .select("svg")
+        .selectAll('.saddle')
+        .data(saddleCP)
+        .enter().append('g')
+        .classed('saddle', true)
+        .attr('transform',"translate(0,0)")
+        .append('path')
+        .attr('d', this.saddleSymbol);
+
+    saddlePoints.exit().remove();
+
+    d3.select(parentDIV)
+        .select("svg")
+        .selectAll('.saddle')
+        .data(saddleCP)
+        .transition()
+        .duration(1500)
+        .attr('transform',function (d) {
+            var x0 = scaleX(self.faces[d.simplexIndex].v1x);
+            var y0 = scaleY(self.faces[d.simplexIndex].v1y);
+            return 'translate(' + x0 + ',' + y0 + ')';
+        });
+
+    /*
     var cpoints = d3.select(parentDIV)
         .select("svg")
         .selectAll('.cps')
@@ -169,8 +256,8 @@ Manager.prototype.drawVF = function (parentDIV, vf, cps) {
     cpoints.enter().append('circle')
         .classed('cps', true)
         .merge(cpoints)
-        //.transition()
-        //.duration(1500)
+        .transition()
+        .duration(1500)
         .attr('cx', function (d) {
             return scaleX(self.faces[d.simplexIndex].v1x);
         })
@@ -180,11 +267,12 @@ Manager.prototype.drawVF = function (parentDIV, vf, cps) {
         .attr('r', 5);
 
     cpoints.exit().remove();
+    */
 };
 
 Manager.prototype.drawContour = function (parentDIV, vf, cps) {
     var self = this;
-    
+
     var scaleX = d3.scaleLinear()
         .domain([self.minX, self.maxX])
         .range([30, 470]);
@@ -197,42 +285,111 @@ Manager.prototype.drawContour = function (parentDIV, vf, cps) {
         .domain([0, 20]) // TODO generalize
         .range(['#ccc', '#111']);
 
-    var arrows = d3.select(parentDIV)
+    var contours = d3.select(parentDIV)
         .select("svg")
-        .selectAll('.arrows')
+        .selectAll('.contour')
         .data(self.verts);
 
-    arrows.enter().append('line')
-        .classed('arrows', true)
-        .attr('x1', function (d) {
+    contours.enter().append('circle')
+        .classed('contour', true)
+        .attr('cx', function (d) {
             return scaleX(d.x);
         })
-        .attr('y1', function (d) {
+        .attr('cy', function (d) {
             return scaleY(d.y);
         })
-        .attr('x2', function (d) {
-            return scaleX(d.x);
-        })
-        .attr('y2', function (d) {
-            return scaleY(d.y);
-        })
-        .merge(arrows)
+        .attr('r', 5)
+        .style("fill", "whitesmoke")
+        .merge(contours)
         .transition()
         .duration(1500)
-        .attr('x2', function (d, i) {
-            var x1 = scaleX(d.x);
-            return x1 + vf[i].vx;
-        })
-        .attr('y2', function (d, i) {
-            var y1 = scaleY(d.y);
-            return y1 + vf[i].vy;
-
-        })
-        .style("stroke", function (d, i) {
+        .style("fill", function (d, i) {
             var norm = Math.sqrt(vf[i].vx * vf[i].vx + vf[i].vy * vf[i].vy);
             return colorScale(norm);
         });
 
+    console.log(cps);
+    var sourceCP = cps.filter(function (d) { return d.TYPE === 'source' });
+    var sinkCP = cps.filter(function (d) { return d.TYPE === 'sink' });
+    var saddleCP = cps.filter(function (d) { return d.TYPE === 'saddle' });
+
+    var sourcePoints = d3.select(parentDIV)
+        .select("svg")
+        .selectAll('.source')
+        .data(sourceCP);
+
+    sourcePoints.enter().append('circle')
+        .classed('source', true)
+        .attr('cx', function (d) {
+            return scaleX(self.faces[d.simplexIndex].v1x);
+        })
+        .attr('cy', function (d) {
+            return scaleY(self.faces[d.simplexIndex].v1y);
+        })
+        .attr('r', 0)
+        .merge(sourcePoints)
+        .transition()
+        .duration(1500)
+        .attr('cx', function (d) {
+            return scaleX(self.faces[d.simplexIndex].v1x);
+        })
+        .attr('cy', function (d) {
+            return scaleY(self.faces[d.simplexIndex].v1y);
+        })
+        .attr('r', 5);
+
+    sourcePoints.exit().remove();
+
+    var sinkPoints = d3.select(parentDIV)
+        .select("svg")
+        .selectAll('.sink')
+        .data(sinkCP)
+        .enter().append('g')
+        .classed('sink', true)
+        .attr('transform',"translate(0,0)")
+        .append('path')
+        .attr('d', this.sinkSymbol);
+
+    sinkPoints.exit().remove();
+
+    d3.select(parentDIV)
+        .select("svg")
+        .selectAll('.sink')
+        .data(sinkCP)
+        .transition()
+        .duration(1500)
+        .attr('transform',function (d) {
+            var x0 = scaleX(self.faces[d.simplexIndex].v1x);
+            var y0 = scaleY(self.faces[d.simplexIndex].v1y);
+            return 'translate(' + x0 + ',' + y0 + ')';
+        });
+
+
+    var saddlePoints = d3.select(parentDIV)
+        .select("svg")
+        .selectAll('.saddle')
+        .data(saddleCP)
+        .enter().append('g')
+        .classed('saddle', true)
+        .attr('transform',"translate(0,0)")
+        .append('path')
+        .attr('d', this.saddleSymbol);
+
+    saddlePoints.exit().remove();
+
+    d3.select(parentDIV)
+        .select("svg")
+        .selectAll('.saddle')
+        .data(saddleCP)
+        .transition()
+        .duration(1500)
+        .attr('transform',function (d) {
+            var x0 = scaleX(self.faces[d.simplexIndex].v1x);
+            var y0 = scaleY(self.faces[d.simplexIndex].v1y);
+            return 'translate(' + x0 + ',' + y0 + ')';
+        });
+
+    /*
     var cpoints = d3.select(parentDIV)
         .select("svg")
         .selectAll('.cps')
@@ -252,6 +409,7 @@ Manager.prototype.drawContour = function (parentDIV, vf, cps) {
         .attr('r', 5);
 
     cpoints.exit().remove();
+    */
 };
 
 Manager.prototype.drawTree = function (parentDIV, treeData, vf) {
@@ -268,7 +426,7 @@ Manager.prototype.drawTree = function (parentDIV, treeData, vf) {
         (treeData);
 
     var treemap = d3.cluster()
-        .size([270, 550]);
+        .size([440, 550]);
 
     var nodes = d3.hierarchy(root, function (d) {
         return d.children;
@@ -281,22 +439,57 @@ Manager.prototype.drawTree = function (parentDIV, treeData, vf) {
         .append("g")
         .attr("transform", "translate(20, 20)");
 
+    var valueScale = d3.scaleLinear()
+        .domain([0, d3.max(treeData, function (d) {
+            return +d.VALUE
+        })])
+        .range([550, 50]);
+
+    // Axis
+    var ticks = d3.map(treeData, function (d) {
+        return +d.VALUE
+    }).keys();
+
+    // TODO enter().append() for the following:
+    // TODO or add in HTML
+
+    // TODO add a slider -> fade upper part of the tree update the contour
+
+    d3.select(parentDIV)
+        .select("svg")
+        .append("g")
+        .attr("class", "grid")
+        .attr("transform", "translate(460,20)")
+        .call(d3.axisRight(valueScale)
+            .tickSize(-450)
+            .tickFormat("")
+            .tickValues(ticks));
+
+    d3.select(parentDIV)
+        .select("svg")
+        .append("g")
+        .attr("class", "axis")
+        .attr("transform", "translate(460,20)")
+        .call(d3.axisRight(valueScale)
+            .tickFormat(d3.format(".3f"))
+            .tickValues(ticks));
+
     var link = group.selectAll(".link")
         .data(nodes.descendants().slice(1))
         .enter().append("path")
         .attr("class", "link")
         .attr("d", function (d) {
-            return "M" + d.x + "," + d.y
-                + "C" + (d.x + d.parent.x) / 2 + "," + d.y
-                + " " + (d.x + d.parent.x) / 2 + "," + d.parent.y
-                + " " + d.parent.x + "," + d.parent.y;
+            return "M" + d.x + "," + valueScale(parseFloat(d.data.data.VALUE))
+                + "C" + (d.x + d.parent.x) / 2 + "," + valueScale(parseFloat(d.data.data.VALUE))
+                + " " + (d.x + d.parent.x) / 2 + "," + valueScale(parseFloat(d.parent.data.data.VALUE))
+                + " " + d.parent.x + "," + valueScale(parseFloat(d.parent.data.data.VALUE));
         });
 
     var node = group.selectAll(".node")
         .data(nodes.descendants())
         .enter().append("g")
         .attr("transform", function (d) {
-            return "translate(" + d.x + "," + d.y + ")";
+            return "translate(" + d.x + "," + valueScale(parseFloat(d.data.data.VALUE)) + ")";
         });
 
     node.append("circle")
@@ -311,13 +504,13 @@ Manager.prototype.drawTree = function (parentDIV, treeData, vf) {
             group.selectAll("circle").classed("selected", false);
             d3.select(this).classed("selected", !selected);
             if (!selected) {
-                self.changeContour(d.data.data.VALUE, vf)
+                self.changeContour(d.data.data.VALUE, vf);
             }
             else {
                 self.changeContour(0, vf)
             }
         })
-        .on("mouseover", function (d) {
+        .on("mouseover", function (d) { // TODO for leaves, change color of the corresponding cp in all dgms
             self.tooltip.transition()
                 .duration(200)
                 .style("opacity", 1);
@@ -340,13 +533,17 @@ Manager.prototype.changeContour = function (value, vf) {
         .domain([0, 20]) // TODO generalize
         .range(['#ccc', '#111']);
 
-    d3.select("#indi_contour_div").selectAll('.arrows')
+    d3.select("#indi_contour_div").selectAll('.contour') // TODO also change the color of cps
         .transition()
         .duration(1000)
-        .style("stroke", function (d, i) {
+        .style("fill", function (d, i) {
             var norm = Math.sqrt(vf[i].vx * vf[i].vx + vf[i].vy * vf[i].vy);
-            if (norm <= value){
-                return "#b91000";
+            if (norm <= (parseFloat(value) + 0.1)){
+                //return "#b94c42";
+                var val = d3.rgb(colorScale(norm));
+                val.r += 70;
+                return val;
+
             }
             return colorScale(norm);
         });
@@ -480,11 +677,11 @@ Manager.prototype.compDrawContour = function (parentDIV, vf, cps) {
         })
         .attr('x2', function (d, i) {
             var x1 = scaleX(d.x);
-            return x1 + vf[i].vx;
+            return x1 + vf[i].vx/2;
         })
         .attr('y2', function (d, i) {
             var y1 = scaleY(d.y);
-            return y1 + vf[i].vy;
+            return y1 + vf[i].vy/2;
 
         })
         .style("stroke", function (d, i) {
@@ -525,7 +722,7 @@ Manager.prototype.compDrawTree = function (parentDIV, treeData) {
             return d.PARENT;
         })
         (treeData);
-    
+
     var treemap = d3.cluster()
         .size([220, 320]);
 

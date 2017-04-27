@@ -6,11 +6,11 @@
      * the classes are defined in the respective javascript files.
      */
     function init() {
-/*
+//*
         d3.queue()
             .defer(d3.csv, "data/tile1/tile1.faces.txt")
             .defer(d3.csv, "data/tile1/tile1.verts.txt")
-            .defer(d3.csv, "data/tile1/tile1.cps.txt")
+            .defer(d3.csv, "data/tile1/tile1.new.cps.txt")
             .defer(d3.csv, "data/tile1/tile1.vf.txt")
             .defer(d3.csv, "data/tile1/treeData.txt")
             .await(function (error, faces, verts, cps, vf, treeData) {
@@ -36,12 +36,18 @@
 
                     cps.forEach(function (d) {
                         d.simplexIndex = +d['SIMPLEX'];
+                        d.robustness = +d['ROBUSTNESS'];
                     });
 
-                    vf.forEach(function (d) {
+                    vf.forEach(function (d, i) {
                         d.vx = +d['VX'];
                         d.vy = +d['VY'];
-                        d.norm = Math.sqrt(d.vx * d.vx + d.vy * d.vy)
+                        d.norm = Math.sqrt(d.vx * d.vx + d.vy * d.vy);
+                        verts[i].norm = Math.sqrt(d.vx * d.vx + d.vy * d.vy);
+                    });
+
+                    treeData.forEach(function (d) {
+                        d.simplexIndex = +d['SIMPLEX'];
                     });
 
                     var manager = new Manager(verts, faces, []);
@@ -51,8 +57,8 @@
                 }
             });
 
-        */
-
+       // */
+/*
         d3.queue()
             .defer(d3.csv, "data/tris.txt")
             .defer(d3.csv, "data/xy.txt")
@@ -196,13 +202,10 @@
 
 
                     var manager = new Manager(verts, faces, ensData);
-                    //manager.individual(vf1, cps1, [], "img/img1.png");
-                    //manager.compare("ens1", vf1, cps1, [], "img/img1.png")
 
                 }
             });
-
-
+*/
     }
 
     /**

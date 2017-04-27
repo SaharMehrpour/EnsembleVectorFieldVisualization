@@ -89,7 +89,7 @@
 }
 
 #indi_tree_div svg {
-    width: 300px;
+    width: 500px;
     height: 600px;
 }
 
@@ -117,10 +117,17 @@
     fill: black;
 }
 
+#indi_tree_div circle:hover {
+    cursor: pointer;
+}
+
+#indi_tree_div .grid line {
+    stroke: #c0c0c0;
+}
 /*---*/
 
 #indi_vf_div svg .arrows{
-    stroke-width: 1.5px;
+    stroke-width: 1px;
     stroke: black;
     fill: none;
 }
@@ -135,12 +142,40 @@
     stroke: forestgreen;
 }
 
+#indi_vf_div .saddle {
+    opacity: 1;
+    fill: whitesmoke;
+    stroke: black;
+    stroke-width: 3px;
+}
+
+#indi_vf_div .source , #indi_vf_div .sink{
+    opacity: 1;
+    fill: black;
+    stroke: black;
+    stroke-width: 2px;
+}
+
 /*---*/
 
 #indi_contour_div .cps {
     opacity: 1;
     fill: forestgreen;
     stroke: forestgreen;
+}
+
+#indi_contour_div .saddle {
+    opacity: 1;
+    fill: whitesmoke;
+    stroke: black;
+    stroke-width: 3px;
+}
+
+#indi_contour_div .source , #indi_contour_div .sink{
+    opacity: 1;
+    stroke: black;
+    fill: black;
+    stroke-width: 2px;
 }
 
 #indi_contour_div svg .arrows {
@@ -197,8 +232,7 @@
 }
 
 #comp_list_div svg .arrows{
-    stroke-width: 1.5px;
-    stroke: black;
+    stroke-width: 3px;
     fill: none;
 }
 
