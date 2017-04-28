@@ -6,7 +6,7 @@
      * the classes are defined in the respective javascript files.
      */
     function init() {
-//*
+/*
         d3.queue()
             .defer(d3.csv, "data/tile1/tile1.faces.txt")
             .defer(d3.csv, "data/tile1/tile1.verts.txt")
@@ -57,29 +57,44 @@
                 }
             });
 
-       // */
-/*
+        */
+///*
         d3.queue()
-            .defer(d3.csv, "data/tris.txt")
-            .defer(d3.csv, "data/xy.txt")
-            .defer(d3.csv, "data/cps1.txt")
-            .defer(d3.csv, "data/ens1-uv.csv")
-            .defer(d3.csv, "data/cps2.txt")
-            .defer(d3.csv, "data/ens2-uv.csv")
-            .defer(d3.csv, "data/cps3.txt")
-            .defer(d3.csv, "data/ens3-uv.csv")
-            .defer(d3.csv, "data/cps4.txt")
-            .defer(d3.csv, "data/ens4-uv.csv")
-            .defer(d3.csv, "data/cps5.txt")
-            .defer(d3.csv, "data/ens5-uv.csv")
-            .defer(d3.csv, "data/cps6.txt")
-            .defer(d3.csv, "data/ens6-uv.csv")
-            .defer(d3.csv, "data/cps7.txt")
-            .defer(d3.csv, "data/ens7-uv.csv")
-            .defer(d3.csv, "data/cps8.txt")
-            .defer(d3.csv, "data/ens8-uv.csv")
+            .defer(d3.csv, "data/Navid/tris.txt")
+            .defer(d3.csv, "data/Navid/xy.txt")
+            .defer(d3.csv, "data/Navid/tree_data_ens01.txt")
+            .defer(d3.csv, "data/Navid/uv_ens01.txt")
+            .defer(d3.csv, "data/Navid/tree_data_ens02.txt")
+            .defer(d3.csv, "data/Navid/uv_ens02.txt")
+            .defer(d3.csv, "data/Navid/tree_data_ens03.txt")
+            .defer(d3.csv, "data/Navid/uv_ens03.txt")
+            .defer(d3.csv, "data/Navid/tree_data_ens04.txt")
+            .defer(d3.csv, "data/Navid/uv_ens04.txt")
+            .defer(d3.csv, "data/Navid/tree_data_ens05.txt")
+            .defer(d3.csv, "data/Navid/uv_ens05.txt")
+            .defer(d3.csv, "data/Navid/tree_data_ens06.txt")
+            .defer(d3.csv, "data/Navid/uv_ens06.txt")
+            .defer(d3.csv, "data/Navid/tree_data_ens07.txt")
+            .defer(d3.csv, "data/Navid/uv_ens07.txt")
+            .defer(d3.csv, "data/Navid/tree_data_ens08.txt")
+            .defer(d3.csv, "data/Navid/uv_ens08.txt")
+            .defer(d3.csv, "data/Navid/tree_data_ens09.txt")
+            .defer(d3.csv, "data/Navid/uv_ens09.txt")
+            .defer(d3.csv, "data/Navid/tree_data_ens10.txt")
+            .defer(d3.csv, "data/Navid/uv_ens10.txt")
+            .defer(d3.csv, "data/Navid/tree_data_ens11.txt")
+            .defer(d3.csv, "data/Navid/uv_ens11.txt")
+            .defer(d3.csv, "data/Navid/tree_data_ens12.txt")
+            .defer(d3.csv, "data/Navid/uv_ens12.txt")
+            .defer(d3.csv, "data/Navid/tree_data_ens13.txt")
+            .defer(d3.csv, "data/Navid/uv_ens13.txt")
+            .defer(d3.csv, "data/Navid/tree_data_ens14.txt")
+            .defer(d3.csv, "data/Navid/uv_ens14.txt")
+            .defer(d3.csv, "data/Navid/tree_data_ens15.txt")
+            .defer(d3.csv, "data/Navid/uv_ens15.txt")
             .await(function (error, faces, verts, cps1, vf1, cps2, vf2, cps3, vf3, cps4, vf4,
-                             cps5, vf5, cps6, vf6, cps7, vf7, cps8, vf8) {
+                             cps5, vf5, cps6, vf6, cps7, vf7, cps8, vf8, cps9, vf9, cps10, vf10,
+                             cps11,vf11,cps12,vf12,cps13,vf13,cps14,vf14,cps15,vf15) {
                 if (error) {
                     console.error('Error in reading the data: ' + error);
                 }
@@ -100,112 +115,35 @@
                         d.v3y = verts[+d['T3'] - 1].y;
                     });
 
-                    cps1.forEach(function (d) {
-                        d.simplexIndex = +d['SIMPLEX'] - 1;
-                        d.type = d['TYPE'];
-                        d.robustness = +d['ROBUSTNESS'];
+                    var cpsList = [cps1, cps2, cps3, cps4, cps5, cps6, cps7, cps8, cps9, cps10, cps11,cps12,cps13,cps14,cps15];
+                    var vfList = [vf1, vf2, vf3, vf4, vf5, vf6, vf7, vf8, vf9, vf10, vf11,vf12,vf13,vf14,vf15];
 
-                    });
+                    for(var i=0; i<15; i++) {
+                        cpsList[i].forEach(function (d) {
+                            d.simplexIndex = +d['SIMPLEX'] - 1;
+                            d.type = d['TYPE'];
+                            d.robustness = +d['ROBUSTNESS'];
 
-                    vf1.forEach(function (d) {
-                        d.vx = +d['U'];
-                        d.vy = +d['V'];
-                    });
+                        });
+                        vfList[i].forEach(function (d) {
+                            d.vx = +d['U'];
+                            d.vy = +d['V'];
+                        });
+                    }
 
-                    cps2.forEach(function (d) {
-                        d.simplexIndex = +d['SIMPLEX'] - 1;
-                        d.type = d['TYPE'];
-                        d.robustness = +d['ROBUSTNESS'];
-                    });
-
-                    vf2.forEach(function (d) {
-                        d.vx = +d['U'];
-                        d.vy = +d['V'];
-                    });
-
-                    cps3.forEach(function (d) {
-                        d.simplexIndex = +d['SIMPLEX'] - 1;
-                        d.type = d['TYPE'];
-                        d.robustness = +d['ROBUSTNESS'];
-                    });
-
-                    vf3.forEach(function (d) {
-                        d.vx = +d['U'];
-                        d.vy = +d['V'];
-                    });
-
-                    cps4.forEach(function (d) {
-                        d.simplexIndex = +d['SIMPLEX'] - 1;
-                        d.type = d['TYPE'];
-                        d.robustness = +d['ROBUSTNESS'];
-                    });
-
-                    vf4.forEach(function (d) {
-                        d.vx = +d['U'];
-                        d.vy = +d['V'];
-                    });
-
-                    cps5.forEach(function (d) {
-                        d.simplexIndex = +d['SIMPLEX'] - 1;
-                        d.type = d['TYPE'];
-                        d.robustness = +d['ROBUSTNESS'];
-                    });
-
-                    vf5.forEach(function (d) {
-                        d.vx = +d['U'];
-                        d.vy = +d['V'];
-                    });
-
-                    cps6.forEach(function (d) {
-                        d.simplexIndex = +d['SIMPLEX'] - 1;
-                        d.type = d['TYPE'];
-                        d.robustness = +d['ROBUSTNESS'];
-                    });
-
-                    vf6.forEach(function (d) {
-                        d.vx = +d['U'];
-                        d.vy = +d['V'];
-                    });
-
-                    cps7.forEach(function (d) {
-                        d.simplexIndex = +d['SIMPLEX'] - 1;
-                        d.type = d['TYPE'];
-                        d.robustness = +d['ROBUSTNESS'];
-                    });
-
-                    vf7.forEach(function (d) {
-                        d.vx = +d['U'];
-                        d.vy = +d['V'];
-                    });
-
-                    cps8.forEach(function (d) {
-                        d.simplexIndex = +d['SIMPLEX'] - 1;
-                        d.type = d['TYPE'];
-                        d.robustness = +d['ROBUSTNESS'];
-                    });
-
-                    vf8.forEach(function (d) {
-                        d.vx = +d['U'];
-                        d.vy = +d['V'];
-                    });
-
-                    var ensData = [
-                        {"id": 1, "vf": vf1, "cps":cps1, "treeData":[], "fileLocation": "img/img1.png"},
-                        {"id": 2, "vf": vf2, "cps":cps2, "treeData":[], "fileLocation": "img/img2.png"},
-                        {"id": 3, "vf": vf3, "cps":cps3, "treeData":[], "fileLocation": "img/img3.png"},
-                        {"id": 4, "vf": vf4, "cps":cps4, "treeData":[], "fileLocation": "img/img4.png"},
-                        {"id": 5, "vf": vf5, "cps":cps5, "treeData":[], "fileLocation": "img/img5.png"},
-                        {"id": 6, "vf": vf6, "cps":cps6, "treeData":[], "fileLocation": "img/img6.png"},
-                        {"id": 7, "vf": vf7, "cps":cps7, "treeData":[], "fileLocation": "img/img7.png"},
-                        {"id": 8, "vf": vf8, "cps":cps8, "treeData":[], "fileLocation": "img/img8.png"},
-                    ];
-
+                    var ensData = {
+                        'vf': vfList,
+                        'treeData': cpsList,
+                        'fileLocation': ["img/img1.png", "img/img2.png", "img/img3.png", "img/img4.png", "img/img5.png",
+                            "img/img6.png", "img/img7.png", "img/img8.png", "img/img9.png", "img/img10.png",
+                            "img/img11.png", "img/img12.png", "img/img13.png", "img/img14.png", "img/img15"]
+                    };
 
                     var manager = new Manager(verts, faces, ensData);
 
                 }
             });
-*/
+//*/
     }
 
     /**

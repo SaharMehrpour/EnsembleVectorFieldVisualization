@@ -1,7 +1,7 @@
 /* Header */
 
 #header {
-    width: 1850px;
+    width: 1800px;
     height: 50px;
     background-color: #545454;
 }
@@ -76,8 +76,17 @@
 }
 
 #indi_dgm_div {
-    width: 2000px;
+    width: 1800px;
 }
+
+#indi_tree_div , #indi_vf_div , #indi_contour_div{
+    padding: 0 20px;
+}
+
+#indi_lic_div {
+    padding: 30px 20px;
+}
+
 
 #indi_dgm_div > div {
     float: left;
@@ -101,16 +110,18 @@
     fill: none;
 }
 
-#indi_tree_div .source {
-    fill: forestgreen;
+#indi_tree_div .source , #indi_tree_div .sink{
+    opacity: 1;
+    stroke: black;
+    fill: black;
+    stroke-width: 2px;
 }
 
 #indi_tree_div .saddle {
-    fill: steelblue;
-}
-
-#indi_tree_div .sink {
-    fill: darkred;
+    opacity: 1;
+    fill: whitesmoke;
+    stroke: black;
+    stroke-width: 3px;
 }
 
 #indi_tree_div .merge {
@@ -123,6 +134,7 @@
 
 #indi_tree_div .grid line {
     stroke: #c0c0c0;
+    stroke-dasharray: 3;
 }
 /*---*/
 
@@ -171,7 +183,7 @@
     stroke-width: 3px;
 }
 
-#indi_contour_div .source , #indi_contour_div .sink{
+#indi_contour_div .source , #indi_contour_div .sink {
     opacity: 1;
     stroke: black;
     fill: black;
@@ -182,11 +194,10 @@
     stroke-width: 5px;
 }
 
-/*---*/
-
-#indi_lic_div {
-    padding-top: 30px;
+#indi_contour_div .selected {
+    fill: red;
 }
+/*---*/
 
 #indi_lic_div img {
     max-width: 440px;
@@ -248,16 +259,18 @@
     fill: none;
 }
 
-#comp_list_div .tree_diagram svg .source {
-    fill: forestgreen;
+#comp_list_div .tree_diagram svg .source , #comp_list_div .tree_diagram svg .sink {
+    opacity: 1;
+    stroke: black;
+    fill: black;
+    stroke-width: 2px;
 }
 
 #comp_list_div .tree_diagram svg .saddle {
-    fill: steelblue;
-}
-
-#comp_list_div .tree_diagram svg .sink {
-    fill: darkred;
+    opacity: 1;
+    fill: whitesmoke;
+    stroke: black;
+    stroke-width: 3px;
 }
 
 #comp_list_div .tree_diagram svg .merge {
