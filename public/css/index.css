@@ -77,6 +77,7 @@
 
 #indi_dgm_div {
     width: 1800px;
+    min-height: 1000px;
 }
 
 #indi_tree_div , #indi_vf_div , #indi_contour_div{
@@ -104,38 +105,10 @@
 
 /*---*/
 
-#indi_tree_div .link {
-    stroke-width: 2px;
-    stroke: black;
-    fill: none;
-}
-
-#indi_tree_div .source , #indi_tree_div .sink{
-    opacity: 1;
-    stroke: black;
-    fill: black;
-    stroke-width: 2px;
-}
-
-#indi_tree_div .saddle {
-    opacity: 1;
-    fill: whitesmoke;
-    stroke: black;
-    stroke-width: 3px;
-}
-
-#indi_tree_div .merge {
-    fill: black;
-}
-
 #indi_tree_div circle:hover {
     cursor: pointer;
 }
 
-#indi_tree_div .grid line {
-    stroke: #c0c0c0;
-    stroke-dasharray: 3;
-}
 /*---*/
 
 #indi_vf_div svg .arrows{
@@ -148,30 +121,6 @@
     fill: #4C4C4C
 }
 
-#indi_vf_div .cps {
-    opacity: 1;
-    fill: forestgreen;
-    stroke: forestgreen;
-}
-
-#indi_vf_div .saddle {
-    opacity: 1;
-    fill: whitesmoke;
-    stroke: black;
-    stroke-width: 3px;
-}
-
-#indi_vf_div .source , #indi_vf_div .sink{
-    opacity: 1;
-    fill: black;
-    stroke: black;
-    stroke-width: 2px;
-}
-
-#indi_vf_div .selected {
-    fill: red;
-}
-
 /*---*/
 
 #indi_contour_div .cps {
@@ -180,27 +129,10 @@
     stroke: forestgreen;
 }
 
-#indi_contour_div .saddle {
-    opacity: 1;
-    fill: whitesmoke;
-    stroke: black;
-    stroke-width: 3px;
-}
-
-#indi_contour_div .source , #indi_contour_div .sink {
-    opacity: 1;
-    stroke: black;
-    fill: black;
-    stroke-width: 2px;
-}
-
 #indi_contour_div svg .arrows {
     stroke-width: 5px;
 }
 
-#indi_contour_div .selected {
-    fill: red;
-}
 /*---*/
 
 #indi_lic_div img {
@@ -209,6 +141,7 @@
 }
 
 /* Compare Div */
+
 #comp_nav {
     width: 100%;
     padding: 20px;
@@ -253,38 +186,8 @@
     fill: none;
 }
 
-#comp_list_div svg .cps {
-    opacity: 1;
-    fill: forestgreen;
-    stroke: forestgreen;
-}
-
-#comp_list_div .tree_diagram svg .link {
-    stroke-width: 2px;
-    stroke: black;
-    fill: none;
-}
-
-#comp_list_div .tree_diagram svg .source , #comp_list_div .tree_diagram svg .sink {
-    opacity: 1;
-    stroke: black;
-    fill: black;
-    stroke-width: 2px;
-}
-
-#comp_list_div .tree_diagram svg .saddle {
-    opacity: 1;
-    fill: whitesmoke;
-    stroke: black;
-    stroke-width: 3px;
-}
-
 #comp_list_div .saddle path , #comp_list_div .sink path {
     transform: scale(0.7);
-}
-
-#comp_list_div .tree_diagram svg .merge {
-    fill: black;
 }
 
 #comp_list_div div .lic_diagram img {
@@ -296,23 +199,21 @@
     margin-top: 20px;
 }
 
-#comp_list_div .tree_diagram .grid line {
-    stroke: #c0c0c0;
-    stroke-dasharray: 3;
+#comp_list_div .robustness_diagram svg {
+    height: 350px;
+    width: 350px;
 }
 
-#comp_list_div .contour_diagram .selected {
-    fill: red !important;
-}
+/* general */
 
-#comp_list_div .contour_diagram svg .saddle {
+.saddle {
     opacity: 1;
     fill: whitesmoke;
     stroke: black;
     stroke-width: 3px;
 }
 
-#comp_list_div .contour_diagram svg .source , #comp_list_div .contour_diagram svg .sink {
+.source , .sink {
     opacity: 1;
     stroke: black;
     fill: black;
@@ -325,7 +226,46 @@
     stroke-width: 2px;
 }
 
+.merge {
+    fill: black;
+}
+
+.link {
+    stroke-width: 2px;
+    stroke: black;
+    fill: none;
+}
+
 .slider_line line {
     stroke: red;
     stroke-width: 2px;
+}
+
+.grid line {
+    stroke: #c0c0c0;
+    stroke-dasharray: 3;
+}
+
+.selected {
+    fill: red !important;
+}
+
+/* About */
+
+a {
+    text-decoration: none;
+    color: black;
+    cursor: hand;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+a:visited {
+    border-bottom: 1px gray dotted;
+}
+
+a:link {
+    border-bottom: 1px grey dotted;
 }

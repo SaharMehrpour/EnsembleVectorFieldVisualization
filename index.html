@@ -26,14 +26,20 @@
 
 <div id="header">
     <div id="title">Uncertain Visualization</div>
-    <div id="individual" class="active">Individual</div>
+    <div id="individual">Individual</div>
     <div id="compare">Compare</div>
-    <div id="about">About</div>
+    <div id="about" class="active">About</div>
 </div>
 
-<div class="main" id="indi_div">
+<div class="main hidden" id="indi_div">
     <div id="indi_nav">
-        Select the ensemble to be shown here. </br>
+        <h4>Individual View</h4>
+        <p> Select the ensemble to be shown here.</br>
+            Hover on points in the Merge Tree to see <i>Type, Degree, Value, Simplex</i> and the <i>Robustness</i> of them.</br>
+            Hovering on the critical points in each diagram marks the corresponding point in other diagrams. </br>
+            Clicking on the points in the tree will change
+            the color of vectors with magnitude equal or less than the value. Clicking again will clear the selection.
+        </p>
         <select name="Ensemble" id="ens_drop_down_indi"></select>
     </div>
     <div id="indi_dgm_div">
@@ -58,8 +64,13 @@
 
 <div class="main hidden" id="comp_div">
     <div id="comp_nav">
-        Select the ensemble to be shown here. To remove the ensemble diagrams, click on the remove button on the left.
-        </br>
+        <h4>Compare View</h4>
+        <p> Add an ensemble by selecting it from the drop down menu.</br>
+            To remove an ensemble click on the remove icon on the left.</br>
+            Hovering on the critical points in each diagram marks the corresponding point in the other two diagrams.</br>
+            To see the changes by perturbation, change the value on the slider.
+        </p>
+
         <select name="Ensemble" id="ens_drop_down_comp"></select>
         <div id="slider_div" style="padding: 20px">
             <p>
@@ -83,16 +94,32 @@
     </div>
 </div>
 
-<div class="main hidden" id="about_div">
+<div class="main" id="about_div">
     <h3>Visualization in Uncertain Vector Fields</h3>
     <p>
-        We present a visualization of ensemble vector fields. We provide different visualization: Flow Diagram,
-        Simplified Contour Diagram, and Merge Tree. We also provide the images of Flow Diagrams produced by
-        LIC algorithm.
+        We present a visualization of ensemble vector fields.
+        The main idea of this work is inspired by <strong>"Robustness-based Simplification of 2D Steady and Unsteady Vector Fields"
+    </strong> (<a href="http://ieeexplore.ieee.org/abstract/document/7117431/" target="_blank">paper</a>) and
+        <strong>"2D Vector Field Simplification Based on Robustness"</strong>
+        (<a href="http://ieeexplore.ieee.org/abstract/document/6787136/" target="_blank">paper</a>).
+    </p>
+    <p>
+        We designed an <i>individual</i> view to examine each ensemble closely. In this view, flow and vector magnitude are displayed.
+        We also provide the Merge Tree of the ensemble.
+    </p>
+    <p>
+        To compare ensembles, we designed a <i>compare</i> view in which multiple ensembles are selected and are compared
+        by Merge Trees and Robustness of critical points.
     </p>
     <p>
         The data in this visualization is taken from <a href="http://iri.columbia.edu/" target="_blank">
         International Research Institute for Climate Society</a>.
+    </p>
+    <p>
+        This project is done by <a href="https://www.cs.utah.edu/~mehrpour/" target="_blank">Sahar Mehrpour</a> and Navid Farhoudi
+        as a course project for <a href="http://www.sci.utah.edu/~beiwang/teaching/cs6170-spring-2017.html">Computational Topology Course</a>
+        at <a href="https://www.cs.utah.edu/" target="_blank">University of Utah</a>.
+        We used <a href="https://d3js.org/" target="_blank">D3 library</a> to implement our designs.
     </p>
 </div>
 
