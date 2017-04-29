@@ -168,6 +168,10 @@
     stroke-width: 2px;
 }
 
+#indi_vf_div .selected {
+    fill: red;
+}
+
 /*---*/
 
 #indi_contour_div .cps {
@@ -218,6 +222,7 @@
 #comp_list_div .icon img{
     max-width: 20px;
     max-height: 20px;
+    margin-left: 30px;
 }
 
 #comp_list_div .icon {
@@ -296,6 +301,10 @@
     stroke-dasharray: 3;
 }
 
+#comp_list_div .contour_diagram .selected {
+    fill: red !important;
+}
+
 #comp_list_div .contour_diagram svg .saddle {
     opacity: 1;
     fill: whitesmoke;
@@ -313,5 +322,10 @@
 .leaf {
     stroke: black;
     fill: whitesmoke;
+    stroke-width: 2px;
+}
+
+.slider_line line {
+    stroke: red;
     stroke-width: 2px;
 }

@@ -61,9 +61,17 @@
         Select the ensemble to be shown here. To remove the ensemble diagrams, click on the remove button on the left.
         </br>
         <select name="Ensemble" id="ens_drop_down_comp"></select>
+        <div id="slider_div" style="padding: 20px">
+            <p>
+                <label for="slider" style="display: inline-block; text-align: right">
+                    Value = <span id="slider-value">0</span>
+                </label>
+                <input type="range" min="0" max="40" value="0" id="slider" style="width: 210px">
+            </p>
+        </div>
     </div>
     <div id="comp_list_div">
-        <!--
+        <!-- Sample:
         <div id="ens1">
             <div class="icon" id="remove_ens1"><img src="img/remove.png"></div>
             <div id="comp_vf_ens1"><svg></svg></div>

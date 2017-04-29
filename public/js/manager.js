@@ -17,7 +17,7 @@ function Manager(verts, faces, ensData) {
 
 Manager.prototype.init = function() {
 
-    var self= this;
+    var self = this;
 
     self.indiTab = d3.select("#individual");
     self.indiDiv = d3.select("#indi_div");
@@ -48,7 +48,7 @@ Manager.prototype.init = function() {
     });
 
     d3.select("#ens_drop_down_indi").selectAll("option")
-        .data([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15])
+        .data([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])
         .enter()
         .append("option")
         .attr("value", function (d) {
@@ -64,12 +64,11 @@ Manager.prototype.init = function() {
         self.individual(self.ensData.vf[ensNumber - 1],
             self.ensData.treeData[ensNumber - 1],
             self.ensData.fileLocation[ensNumber - 1])
-
     });
 
 
     d3.select("#ens_drop_down_comp").selectAll("option")
-        .data([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15])
+        .data([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])
         .enter()
         .append("option")
         .attr("value", function (d) {
@@ -83,7 +82,7 @@ Manager.prototype.init = function() {
         var ensNumber = +document.getElementById("ens_drop_down_comp").value;
         var ensDiv = d3.selectAll("#ens" + ensNumber);
         if (ensDiv.size() === 0) {
-            self.compare("ens" + ensNumber,
+            self.compare(ensNumber,
                 self.ensData.vf[ensNumber - 1],
                 self.ensData.treeData[ensNumber - 1],
                 self.ensData.fileLocation[ensNumber - 1])
@@ -94,10 +93,18 @@ Manager.prototype.init = function() {
     });
 
     // Global values:
-    self.maxX = d3.max(self.verts, function (d) { return d.x; });
-    self.minX = d3.min(self.verts, function (d) { return d.x; });
-    self.maxY = d3.max(self.verts, function (d) { return d.y; });
-    self.minY = d3.min(self.verts, function (d) { return d.y; });
+    self.maxX = d3.max(self.verts, function (d) {
+        return d.x;
+    });
+    self.minX = d3.min(self.verts, function (d) {
+        return d.x;
+    });
+    self.maxY = d3.max(self.verts, function (d) {
+        return d.y;
+    });
+    self.minY = d3.min(self.verts, function (d) {
+        return d.y;
+    });
 
     self.tooltip = d3.select(".tooltip");
 
@@ -145,8 +152,15 @@ Manager.prototype.init = function() {
         .attr('r', 5)
         .style("fill", "white");
 
+    /* slider */
+    d3.select("#slider").on("input", function () {
+        d3.select("#slider-value").text(+this.value);
+        d3.select("#slider").property("value", +this.value);
+        self.compChangeContour(+this.value);
+    });
+
     console.log("Ready!");
-    
+
 };
 
 /******/
@@ -821,10 +835,10 @@ Manager.prototype.drawTree = function (parentDIV, treeData, vf) {
                 self.changeContour(0, vf)
             }
         })
-        .on("mouseover", function (d) { // TODO for leaves, change color of the corresponding cp in all dgms
+        .on("mouseover", function (d) {
 
-            var s = "#indi_contour_div svg ." + d.data.data.TYPE;
-            var sd = d3.selectAll(s)
+            var s = "#indi_contour_div svg ." + d.data.data.TYPE + " , #indi_vf_div svg ." + d.data.data.TYPE;
+            d3.selectAll(s)
                 .filter(function (g) {
                     return g.SIMPLEX == d.data.data.SIMPLEX
                 })
@@ -833,14 +847,14 @@ Manager.prototype.drawTree = function (parentDIV, treeData, vf) {
             self.tooltip.transition()
                 .duration(200)
                 .style("opacity", 1);
-            self.tooltip.html(function () { // TODO: better text in tooltip
-                return d.data.data.TYPE + " " + d.data.data.VALUE;
+            self.tooltip.html(function () {
+                return self.tooltip_render(d.data.data);
             })
                 .style("left", (d3.event.pageX) + "px")
                 .style("top", (d3.event.pageY - 28) + "px");
         })
         .on("mouseout", function () {
-            var sd = d3.selectAll("#indi_contour_div svg .selected")
+            var sd = d3.selectAll("#indi_contour_div svg .selected, #indi_vf_div svg .selected")
                 .classed("selected", false);
 
             self.tooltip.transition()
@@ -848,50 +862,6 @@ Manager.prototype.drawTree = function (parentDIV, treeData, vf) {
                 .style("opacity", 0);
         });
 
-
-    //////////====================================================================
-    /*
-     var node = group.selectAll(".node")
-     .data(nodes.descendants())
-     .enter().append("g")
-     .attr("transform", function (d) {
-     return "translate(" + d.x + "," + valueScale(parseFloat(d.data.data.VALUE)) + ")";
-     });
-
-     node.append("circle")
-     .attr("r", 5)
-     .attr("cx", 0)
-     .attr("cy", 0)
-     .attr("class", function (d) {
-     return d.data.data.TYPE;
-     })
-     .on("click", function (d) {
-     var selected = d3.select(this).classed("selected");
-     group.selectAll("circle").classed("selected", false);
-     d3.select(this).classed("selected", !selected);
-     if (!selected) {
-     self.changeContour(d.data.data.VALUE, vf);
-     }
-     else {
-     self.changeContour(0, vf)
-     }
-     })
-     .on("mouseover", function (d) { // TODO for leaves, change color of the corresponding cp in all dgms
-     self.tooltip.transition()
-     .duration(200)
-     .style("opacity", 1);
-     self.tooltip.html(function () {
-     return d.data.data.TYPE + " "+ d.data.data.VALUE;
-     })
-     .style("left", (d3.event.pageX) + "px")
-     .style("top", (d3.event.pageY - 28) + "px");
-     })
-     .on("mouseout", function () {
-     self.tooltip.transition()
-     .duration(200)
-     .style("opacity", 0);
-     });
-     */
 };
 
 Manager.prototype.changeContour = function (value, vf) {
@@ -900,13 +870,12 @@ Manager.prototype.changeContour = function (value, vf) {
         .domain([0, 75])
         .range(['#ccc', '#111']);
 
-    d3.select("#indi_contour_div").selectAll('.contour') // TODO also change the color of cps
+    d3.select("#indi_contour_div").selectAll('.contour') // TODO also change the color of cps (should be matched with the tree)
         .transition()
         .duration(1000)
         .style("fill", function (d, i) {
             var norm = Math.sqrt(vf[i].vx * vf[i].vx + vf[i].vy * vf[i].vy);
             if (norm <= (parseFloat(value) + 0.1)){
-                //return "#b94c42";
                 var val = d3.rgb(colorScale(norm));
                 val.r += 70;
                 return val;
@@ -914,31 +883,38 @@ Manager.prototype.changeContour = function (value, vf) {
             }
             return colorScale(norm);
         });
-
 };
 
 /******/
 
-Manager.prototype.compare = function (divID, vf, treeData, fileLocation) {
+Manager.prototype.compare = function (ensNumber, vf, treeData, fileLocation) {
     var self = this;
+
+    var divID = "ens" + ensNumber;
 
     var div = d3.select("#comp_list_div").append("div")
         .attr("id", divID);
 
-    div.append("div")
+    var remove = div.append("div")
         .attr("class", "icon")
-        .attr("id", "remove_" + divID)
-        .append("img")
+        .attr("id", "remove_" + divID);
+
+    remove.append("img")
         .attr("src", "img/remove.png")
         .on("click", function () {
             d3.select("#" + divID).remove();
+        });
+
+    remove.append("h4")
+        .text(function () {
+            return "Ensemble " + ensNumber;
         });
 
     //div.append("div").attr("id", "comp_vf_" + divID).attr("class", "vf_diagram").append("svg");
     div.append("div").attr("id", "comp_contour_" + divID).attr("class", "contour_diagram").append("svg");
     div.append("div").attr("id", "comp_tree_" + divID).attr("class", "tree_diagram").append("svg");
     //div.append("div").attr("id", "comp_lic_" + divID).attr("class", "lic_diagram")
-        //.append("img").attr("src", fileLocation);
+    //.append("img").attr("src", fileLocation);
 
     //self.compDrawVF("#comp_vf_" + divID, vf, treeData);
     self.compDrawContour("#comp_contour_" + divID, vf, treeData);
@@ -1050,6 +1026,9 @@ Manager.prototype.compDrawContour = function (parentDIV, vf, treeData) {
             var y1 = scaleY(d.y);
             return y1 + vf[i].vy/2;
 
+        })
+        .attr('data-norm', function (d, i) {
+            return Math.sqrt(vf[i].vx * vf[i].vx + vf[i].vy * vf[i].vy);
         })
         .style("stroke", function (d, i) {
             var norm = Math.sqrt(vf[i].vx * vf[i].vx + vf[i].vy * vf[i].vy);
@@ -1173,6 +1152,16 @@ Manager.prototype.compDrawTree = function (parentDIV, treeData) {
     ticks.push(40);
 
     // TODO add a slider -> fade upper part of the tree update the contour
+    d3.select(parentDIV)
+        .select("svg")
+        .append('g')
+        .classed('slider_line', true)
+        .attr("transform", "translate(0,340)")
+        .append('line')
+        .attr("x1", 0)
+        .attr("y1", 0)
+        .attr("x2", 200)
+        .attr("y2", 0);
 
     d3.select(parentDIV)
         .select("svg")
@@ -1191,7 +1180,7 @@ Manager.prototype.compDrawTree = function (parentDIV, treeData) {
         .attr("transform", "translate(200,20)")
         .style("stroke-dasharray", ("3, 3"))
         .call(d3.axisRight(valueScale)
-            .tickValues([0,40]));
+            .tickValues([0, 40]));
 
     var group = d3.select(parentDIV)
         .select("svg")
@@ -1270,33 +1259,69 @@ Manager.prototype.compDrawTree = function (parentDIV, treeData) {
     saddlePoints.exit().remove();
 
     // events
-    group.selectAll('.source > circle, .sink > path, .saddle > path, .merge > circle')
-        .on("mouseover", function (d) { // TODO for leaves, change color of the corresponding cp in all dgms
-
-            var s = "#indi_contour_div svg ." + d.data.data.TYPE;
-            var sd = d3.selectAll(s)
+    group.selectAll('.source , .sink, .saddle , .leaf')
+        .on("mouseover", function (d) {
+            var parent = d3.select(this.parentNode.parentNode.parentNode.parentNode);
+            var s = ".contour_diagram svg ." + d.data.data.TYPE;
+            parent.selectAll(s)
                 .filter(function (g) {
                     return g.SIMPLEX == d.data.data.SIMPLEX
                 })
                 .classed("selected", true);
-
-            self.tooltip.transition()
-                .duration(200)
-                .style("opacity", 1);
-            self.tooltip.html(function () { // TODO: better text in tooltip
-                return d.data.data.TYPE + " " + d.data.data.VALUE;
-            })
-                .style("left", (d3.event.pageX) + "px")
-                .style("top", (d3.event.pageY - 28) + "px");
         })
         .on("mouseout", function () {
-            var sd = d3.selectAll("#indi_contour_div svg .selected")
+            var parent = d3.select(this.parentNode.parentNode.parentNode.parentNode);
+            var s = ".contour_diagram svg .selected";
+            parent.selectAll(s)
                 .classed("selected", false);
-
-            self.tooltip.transition()
-                .duration(200)
-                .style("opacity", 0);
         });
 };
 
+Manager.prototype.compChangeContour = function (value) {
 
+    var colorScale = d3.scaleLinear()
+        .domain([0, 75])
+        .range(['#ccc', '#111']);
+
+    d3.select("#comp_list_div").selectAll(".contour_diagram")
+        .selectAll('.arrows')
+        .transition()
+        .duration(1000)
+        .style("stroke", function () {
+            var norm = +d3.select(this).attr("data-norm");
+            if (norm <= value) {
+                var val = d3.rgb(colorScale(norm));
+                val.r += 70;
+                return val;
+            }
+            return colorScale(norm);
+        });
+
+    var valueScale = d3.scaleLinear()
+        .domain([0, 40])
+        .range([320, 20]);
+
+    d3.select("#comp_list_div")
+        .selectAll(".tree_diagram svg")
+        .select(".slider_line")
+        .transition()
+        .duration(500)
+        .attr("transform", function () {
+            return "translate(0," + (valueScale(value) + 20) + ")";
+        });
+};
+/*****/
+
+Manager.prototype.tooltip_render = function (tooltip_data) {
+    var format = d3.format(".4n");
+    var text = "<strong style='color:darkslateblue'>" + tooltip_data.TYPE + "</strong></br> ";
+    text +=  "<strong>Degree</strong>: " + tooltip_data.DEGREE + "</br>";
+    text +=  "<strong>Value</strong>: " + tooltip_data.VALUE + "</br>";
+    text +=  "<strong>Simplex</strong>: " + tooltip_data.SIMPLEX + "</br>";
+    text +=  "<strong>Robustness</strong>: " + format(tooltip_data.robustness);
+    return text;
+};
+
+Manager.prototype.drawSlider = function () {
+
+};
