@@ -233,8 +233,9 @@
 #comp_list_div .contour_diagram, #comp_list_div .tree_diagram,
 #comp_list_div .lic_diagram {
     float: left;
-    width: 250px;
-    height: 350px;
+    width: 300px;
+    height: 400px;
+    padding: 0 20px;
 }
 
 #comp_list_div div svg {
@@ -273,6 +274,10 @@
     stroke-width: 3px;
 }
 
+#comp_list_div .saddle path , #comp_list_div .sink path {
+    transform: scale(0.7);
+}
+
 #comp_list_div .tree_diagram svg .merge {
     fill: black;
 }
@@ -284,4 +289,29 @@
 
 #comp_list_div div .lic_diagram {
     margin-top: 20px;
+}
+
+#comp_list_div .tree_diagram .grid line {
+    stroke: #c0c0c0;
+    stroke-dasharray: 3;
+}
+
+#comp_list_div .contour_diagram svg .saddle {
+    opacity: 1;
+    fill: whitesmoke;
+    stroke: black;
+    stroke-width: 3px;
+}
+
+#comp_list_div .contour_diagram svg .source , #comp_list_div .contour_diagram svg .sink {
+    opacity: 1;
+    stroke: black;
+    fill: black;
+    stroke-width: 2px;
+}
+
+.leaf {
+    stroke: black;
+    fill: whitesmoke;
+    stroke-width: 2px;
 }
