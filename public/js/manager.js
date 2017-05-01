@@ -222,7 +222,8 @@ Manager.prototype.init = function() {
             return scaleY(self.faces[d.simplexIndex].v1y);
         })
         .attr('r', 6)
-        .style('opacity', 0);
+        .style('opacity', 0)
+        .attr("fill","red");
 
 
     // sink
@@ -236,6 +237,7 @@ Manager.prototype.init = function() {
             return 'translate(' + x0 + ',' + y0 + ')';
         })
         .style('opacity', 0)
+        .attr("fill","red")
         .append('path')
         .attr('d', this.sinkSymbol);
 
@@ -250,6 +252,7 @@ Manager.prototype.init = function() {
             return 'translate(' + x0 + ',' + y0 + ')';
         })
         .style('opacity', 0)
+        .attr("fill","red")
         .append('path')
         .attr('d', this.saddleSymbol);
 
@@ -265,6 +268,7 @@ Manager.prototype.init = function() {
             return scaleY(self.faces[d.simplexIndex].v1y);
         })
         .attr('r', 6)
+        .attr("fill","red")
         .style('opacity', 0);
 
     // Compute Mean
@@ -1844,7 +1848,7 @@ Manager.prototype.genMean = function () {
 
     var self = this;
 
-    var svg = d3.select("#gen_svg_div").select("svg");
+    var svg = d3.select("#gen_svg_div").select("svg").transition();
 
     var colorScale = d3.scaleLinear()
         .domain([0, 75])
@@ -1876,7 +1880,8 @@ Manager.prototype.genMean = function () {
         })
         .transition()
         .duration(70)
-        .style('opacity', 1);
+        .style("fill","red")
+        .style('opacity', 0.15);
 };
 
 /*****/
