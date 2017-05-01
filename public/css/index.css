@@ -20,21 +20,7 @@
     float: left;
 }
 
-#individual {
-    width: 80px;
-    float: left;
-    text-align: center;
-    margin-top: 10px;
-}
-
-#compare {
-    width: 80px;
-    float: left;
-    text-align: center;
-    margin-top: 10px;
-}
-
-#about {
+#individual , #compare , #general , #about{
     width: 80px;
     float: left;
     text-align: center;
@@ -61,6 +47,7 @@
 }
 
 /* Main Div*/
+
 .main {
     width: 90%;
 }
@@ -70,6 +57,7 @@
 }
 
 /* Individual Div */
+
 #indi_nav {
     width: 100%;
     padding: 20px;
@@ -103,13 +91,9 @@
     height: 600px;
 }
 
-/*---*/
-
 #indi_tree_div circle:hover {
     cursor: pointer;
 }
-
-/*---*/
 
 #indi_vf_div svg .arrows{
     stroke-width: 1px;
@@ -121,8 +105,6 @@
     fill: #4C4C4C
 }
 
-/*---*/
-
 #indi_contour_div .cps {
     opacity: 1;
     fill: forestgreen;
@@ -132,8 +114,6 @@
 #indi_contour_div svg .arrows {
     stroke-width: 5px;
 }
-
-/*---*/
 
 #indi_lic_div img {
     max-width: 440px;
@@ -202,6 +182,22 @@
 #comp_list_div .robustness_diagram svg {
     height: 350px;
     width: 350px;
+}
+
+/* General */
+
+#gen_nav {
+    width: 100%;
+    padding: 20px;
+}
+
+#gen_svg_div {
+    padding: 20px;
+}
+
+#gen_svg_div svg {
+    width: 500px;
+    height: 600px;
 }
 
 /* general */

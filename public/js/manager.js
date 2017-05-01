@@ -25,6 +25,9 @@ Manager.prototype.init = function() {
     self.compDiv = d3.select("#comp_div");
     self.aboutTab = d3.select("#about");
     self.aboutDiv = d3.select("#about_div");
+    self.genTab = d3.select("#general");
+    self.genDiv = d3.select("#gen_div");
+
 
     self.indiTab.on("click", function () {
         d3.select("#header").selectAll("div").classed("active", false);
@@ -45,6 +48,13 @@ Manager.prototype.init = function() {
         d3.selectAll(".main").classed("hidden", true);
         self.aboutDiv.classed("hidden", false);
         self.aboutTab.classed("active", true);
+    });
+
+    self.genTab.on("click", function () {
+        d3.select("#header").selectAll("div").classed("active", false);
+        d3.selectAll(".main").classed("hidden", true);
+        self.genDiv.classed("hidden", false);
+        self.genTab.classed("active", true);
     });
 
     d3.select("#ens_drop_down_indi").selectAll("option")
@@ -90,6 +100,14 @@ Manager.prototype.init = function() {
         else {
             console.log("The ensemble already exists");
         }
+    });
+
+    d3.select("#animation").on("click", function () {
+        self.genAnimation()
+    });
+
+    d3.select("#mean").on("click", function () {
+        self.genMean()
     });
 
     // Global values:
@@ -151,6 +169,118 @@ Manager.prototype.init = function() {
         })
         .attr('r', 5)
         .style("fill", "white");
+
+    // Gen Tab
+
+    var svg = d3.select("#gen_svg_div")
+        .select("svg");
+
+    svg.append("text")
+        .attr("transform", "translate(200,10)")
+        .attr("id", "gen_ens_title");
+
+    svg.selectAll('.contour')
+        .data(self.verts)
+        .enter().append('circle')
+        .classed('contour', true)
+        .attr('cx', function (d) {
+            return scaleX(d.x);
+        })
+        .attr('cy', function (d) {
+            return scaleY(d.y);
+        })
+        .attr('r', 5)
+        .attr("data-norm", 0)
+        .style("fill", "white");
+
+    var allCPs = [];
+    for (var index = 0; index < self.ensData.treeData.length; index++)
+        allCPs = allCPs.concat(self.ensData.treeData[index]);
+
+    var sourceCP = allCPs.filter(function (d) {
+        return d.TYPE === 'source'
+    });
+    var sinkCP = allCPs.filter(function (d) {
+        return d.TYPE === 'sink'
+    });
+    var saddleCP = allCPs.filter(function (d) {
+        return d.TYPE === 'saddle'
+    });
+    var leafCP = allCPs.filter(function (d) {
+        return d.TYPE === 'leaf'
+    });
+
+    // source
+    var sourcePoints = svg.selectAll('.source')
+        .data(sourceCP)
+        .enter().append('circle')
+        .attr('class','source cp')
+        .attr('cx', function (d) {
+            return scaleX(self.faces[d.simplexIndex].v1x);
+        })
+        .attr('cy', function (d) {
+            return scaleY(self.faces[d.simplexIndex].v1y);
+        })
+        .attr('r', 6)
+        .style('opacity', 0);
+
+
+    // sink
+    var sinkPoints = svg.selectAll('.sink')
+        .data(sinkCP)
+        .enter().append('g')
+        .attr('class','sink cp')
+        .attr('transform',function (d) {
+            var x0 = scaleX(self.faces[d.simplexIndex].v1x);
+            var y0 = scaleY(self.faces[d.simplexIndex].v1y);
+            return 'translate(' + x0 + ',' + y0 + ')';
+        })
+        .style('opacity', 0)
+        .append('path')
+        .attr('d', this.sinkSymbol);
+
+    // saddle
+    var saddlePoints = svg.selectAll('.saddle')
+        .data(saddleCP)
+        .enter().append('g')
+        .attr('class','saddle cp')
+        .attr('transform',function (d) {
+            var x0 = scaleX(self.faces[d.simplexIndex].v1x);
+            var y0 = scaleY(self.faces[d.simplexIndex].v1y);
+            return 'translate(' + x0 + ',' + y0 + ')';
+        })
+        .style('opacity', 0)
+        .append('path')
+        .attr('d', this.saddleSymbol);
+
+    // leaf
+    var leafPoints = svg
+        .selectAll('.leaf')
+        .data(leafCP)
+        .attr('class','leaf cp')
+        .attr('cx', function (d) {
+            return scaleX(self.faces[d.simplexIndex].v1x);
+        })
+        .attr('cy', function (d) {
+            return scaleY(self.faces[d.simplexIndex].v1y);
+        })
+        .attr('r', 6)
+        .style('opacity', 0);
+
+    // Compute Mean
+
+    self.vfMean = [];
+    for (var i=0; i<self.ensData.vf[0].length; i++) {
+        var valueX = 0;
+        var valueY = 0;
+        for (var j=0; j<self.ensData.vf.length; j++) {
+            valueX += self.ensData.vf[j][i].vx;
+            valueY += self.ensData.vf[j][i].vy;
+        }
+        var size = self.ensData.vf.length;
+        var norm = Math.sqrt(valueX/size * valueX/size + valueY/size * valueY/size);
+        self.vfMean.push({vx: valueX/size, vy: valueY/size, norm: norm});
+    }
 
     /* slider */
     d3.select("#slider").on("input", function () {
@@ -1632,6 +1762,121 @@ Manager.prototype.compDrawRobutsnessDiagram = function (parentDIV, treeData) {
 
         });
 
+};
+
+/*****/
+
+Manager.prototype.genAnimation = function () {
+
+    var self = this;
+
+    var svg = d3.select("#gen_svg_div").select("svg")
+        .selectAll('.cp')
+        .style('opacity', 0);
+
+    svg.selectAll('.contour')
+        .attr("fill", "white");
+
+    // Perform animation
+    for (var i = 0; i < self.ensData.vf.length; ++i)
+        self.genDrawContour(self.ensData.vf[i], self.ensData.treeData[i], i)
+};
+
+Manager.prototype.genDrawContour = function (vf, treeData, index) {
+    var self = this;
+
+    var svg = d3.select("#gen_svg_div").select("svg");
+
+    var colorScale = d3.scaleLinear()
+        .domain([0, 75])
+        .range(['#ccc', '#111']);
+
+    d3.select("#gen_ens_title")
+        .transition()
+        .delay(1100 * (index + 1))
+        .text(function () {
+            return "Ensemble " + (index + 1)
+        });
+
+    svg.selectAll('.contour')
+        .attr("fill", function () {
+            var norm = +d3.select(this).attr("data-norm");
+            return colorScale(norm);
+        })
+        .transition()
+        .delay(1100 * (index + 1))
+        .duration(1000)
+        .attr("data-norm", function (d, i) {
+            return Math.sqrt(vf[i].vx * vf[i].vx + vf[i].vy * vf[i].vy);
+        })
+        .style("fill", function (d, i) {
+            var norm = Math.sqrt(vf[i].vx * vf[i].vx + vf[i].vy * vf[i].vy);
+            return colorScale(norm);
+        });
+
+    svg.selectAll('.cp')
+        .filter(function (d) {
+            return d.ensemble == index;
+        })
+        .style("opacity", function () {
+            return d3.select(this).style("opacity");
+        })
+        .transition()
+        .delay(1100 * (index + 1))
+        .duration(70)
+        .style('opacity', 1);
+
+    svg.selectAll('.cp')
+        .filter(function (d) {
+            return d.ensemble != index;
+        })
+        .style("opacity", function () {
+            return d3.select(this).style("opacity");
+        })
+        .transition()
+        .delay(1100 * (index + 1))
+        .duration(70)
+        .style('opacity', 0);
+
+};
+
+Manager.prototype.genMean = function () {
+
+    var self = this;
+
+    var svg = d3.select("#gen_svg_div").select("svg");
+
+    var colorScale = d3.scaleLinear()
+        .domain([0, 75])
+        .range(['#ccc', '#111']);
+
+    d3.select("#gen_ens_title")
+        .transition()
+        .text(function () {
+            return "Mean"
+        });
+
+    svg.selectAll('.contour')
+        .attr("fill", function () {
+            var norm = +d3.select(this).attr("data-norm");
+            return colorScale(norm);
+        })
+        .transition()
+        .duration(1000)
+        .attr("data-norm", function (d, i) {
+            return self.vfMean[i].norm;
+        })
+        .style("fill", function (d, i) {
+            return colorScale(self.vfMean[i].norm);
+        });
+
+    svg.selectAll('.cp')
+        .style("opacity", function () {
+            return d3.select(this).style("opacity");
+        })
+        .transition()
+        .duration(70)
+        .style('opacity', 1);
 };
 
 /*****/

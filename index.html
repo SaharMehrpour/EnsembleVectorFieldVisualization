@@ -28,6 +28,7 @@
     <div id="title">Uncertain Visualization</div>
     <div id="individual">Individual</div>
     <div id="compare">Compare</div>
+    <div id="general">General</div>
     <div id="about" class="active">About</div>
 </div>
 
@@ -91,6 +92,23 @@
             <div id="comp_lic_ens1"></div>
         </div>
         -->
+    </div>
+</div>
+
+<div class="main hidden" id="gen_div">
+    <div id="gen_nav">
+        <h4>General View</h4>
+        <p> There are two modes here: <i>Animation</i> and <i>Mean</i>.</br>
+            In the <i>Animation</i> mode all ensembles are shown in an animation.</br>
+            In the <i>Mean</i> mode the average vector field and all critical points
+            are shown.
+        </p>
+        <input type="button" id="animation" value="Animation">
+        <input type="button" id="mean" value="Mean">
+    </div>
+    <div id="gen_svg_div">
+        <svg>
+        </svg>
     </div>
 </div>
 

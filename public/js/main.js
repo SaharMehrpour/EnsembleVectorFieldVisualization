@@ -70,6 +70,7 @@
                             d.simplexIndex = +d['SIMPLEX'];
                             d.type = d['TYPE'];
                             d.robustness = +d['ROBUSTNESS'];
+                            d.ensemble = i;
 
                         });
                         vfList[i].forEach(function (d) {
