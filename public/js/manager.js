@@ -1991,7 +1991,7 @@ Manager.prototype.genCluster = function () {
 
     d3.select("#gen_ens_title")
         .text(function () {
-            return "Cluster with epsilon=0.3"
+            return "Cluster with epsilon=3"
         });
 
     var colorScale = d3.scaleLinear()
