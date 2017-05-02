@@ -1865,7 +1865,8 @@ Manager.prototype.genAnimation = function () {
     svg.selectAll('.contour')
         .attr("fill", "white");
 
-    svg.selectAll('.cluster')
+    d3.select("#gen_svg_div").select("svg")
+        .selectAll('.cluster')
         .style('opacity', 0);
 
     // Perform animation
