@@ -29,6 +29,7 @@
     <div id="individual">Individual</div>
     <div id="compare">Compare</div>
     <div id="general">General</div>
+    <div id="cluster">Cluster</div>
     <div id="about" class="active">About</div>
 </div>
 
@@ -105,8 +106,33 @@
         </p>
         <input type="button" id="animation" value="Animation">
         <input type="button" id="mean" value="Mean">
+        <input type="button" id="clustering" value="Cluster">
     </div>
     <div id="gen_svg_div">
+        <svg>
+        </svg>
+    </div>
+</div>
+
+<div class="main hidden" id="cluster_div">
+    <div id="cluster_nav">
+        <h4>Cluster View</h4>
+        <p> This is a clustering tool for critical points. The clustering technique is based on
+            <a href="https://en.wikipedia.org/wiki/DBSCAN" target="_blank"><i>DBScan</i></a>
+            technique.</br>
+            The variables of a clustering function can be set by the following sliders.</br>
+            Each cluster has a distinct color. The outliers are eliminated.
+        </p>
+        <label for="e_slider" style="display: inline-block; text-align: right">
+            Epsilon = <span id="e_slider-value">0.1</span>
+        </label>
+        <input type="range" min="0.1" max="5" value="0.1" step="0.1" id="e_slider" style="width: 210px">
+        <label for="n_slider" style="display: inline-block; text-align: right">
+            Number = <span id="n_slider-value">1</span>
+        </label>
+        <input type="range" min="1" max="40" value="0" id="n_slider" style="width: 210px">
+    </div>
+    <div id="cluster_svg_div">
         <svg>
         </svg>
     </div>
@@ -143,6 +169,7 @@
 
 <div class="tooltip" style="opacity: 0"></div>
 
+<script type="application/javascript" src="public/js/dbScan.js"></script>
 <script type="application/javascript" src="public/js/manager.js"></script>
 <script type="application/javascript" src="public/js/main.js"></script>
 </body>

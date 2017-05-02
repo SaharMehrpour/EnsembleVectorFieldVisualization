@@ -20,7 +20,7 @@
     float: left;
 }
 
-#individual , #compare , #general , #about{
+#individual , #compare , #general , #about, #cluster{
     width: 80px;
     float: left;
     text-align: center;
@@ -198,6 +198,18 @@
 #gen_svg_div svg {
     width: 500px;
     height: 600px;
+}
+
+/* Cluster */
+
+#cluster_svg_div svg {
+    width: 500px;
+    height: 600px;
+}
+
+#cluster_nav {
+    width: 100%;
+    padding: 20px;
 }
 
 /* general */

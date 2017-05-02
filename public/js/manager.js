@@ -27,6 +27,8 @@ Manager.prototype.init = function() {
     self.aboutDiv = d3.select("#about_div");
     self.genTab = d3.select("#general");
     self.genDiv = d3.select("#gen_div");
+    self.clusterTab = d3.select("#cluster");
+    self.clusterDiv = d3.select("#cluster_div");
 
 
     self.indiTab.on("click", function () {
@@ -56,6 +58,15 @@ Manager.prototype.init = function() {
         self.genDiv.classed("hidden", false);
         self.genTab.classed("active", true);
     });
+
+    self.clusterTab.on("click", function () {
+        d3.select("#header").selectAll("div").classed("active", false);
+        d3.selectAll(".main").classed("hidden", true);
+        self.clusterDiv.classed("hidden", false);
+        self.clusterTab.classed("active", true);
+    });
+
+    //*******************
 
     d3.select("#ens_drop_down_indi").selectAll("option")
         .data([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])
@@ -102,12 +113,41 @@ Manager.prototype.init = function() {
         }
     });
 
+    //************************
+
     d3.select("#animation").on("click", function () {
         self.genAnimation()
     });
 
     d3.select("#mean").on("click", function () {
         self.genMean()
+    });
+
+    d3.select("#clustering").on("click", function () {
+        self.genCluster()
+    });
+
+    /* slider */
+    d3.select("#slider").on("input", function () {
+        d3.select("#slider-value").text(+this.value);
+        d3.select("#slider").property("value", +this.value);
+        self.compChangeContour(+this.value);
+    });
+
+    self.epsilon = 0.1;
+    self.number = 1;
+    d3.select("#e_slider").on("input", function () {
+        d3.select("#e_slider-value").text(+this.value);
+        d3.select("#e_slider").property("value", +this.value);
+        self.epsilon = +this.value;
+        self.clusterCompute();
+    });
+
+    d3.select("#n_slider").on("input", function () {
+        d3.select("#n_slider-value").text(+this.value);
+        d3.select("#n_slider").property("value", +this.value);
+        self.number = +this.value;
+        self.clusterCompute();
     });
 
     // Global values:
@@ -124,9 +164,11 @@ Manager.prototype.init = function() {
         return d.y;
     });
 
+    //********************
+
     self.tooltip = d3.select(".tooltip");
 
-    /* draw vf and contour */
+    /* Individual Tab */
 
     var scaleX = d3.scaleLinear()
         .domain([self.minX, self.maxX])
@@ -170,7 +212,7 @@ Manager.prototype.init = function() {
         .attr('r', 5)
         .style("fill", "white");
 
-    // Gen Tab
+    /* Gen Tab */
 
     var svg = d3.select("#gen_svg_div")
         .select("svg");
@@ -193,20 +235,20 @@ Manager.prototype.init = function() {
         .attr("data-norm", 0)
         .style("fill", "white");
 
-    var allCPs = [];
+    self.allCPs = [];
     for (var index = 0; index < self.ensData.treeData.length; index++)
-        allCPs = allCPs.concat(self.ensData.treeData[index]);
+        self.allCPs = self.allCPs.concat(self.ensData.treeData[index]);
 
-    var sourceCP = allCPs.filter(function (d) {
+    var sourceCP = self.allCPs.filter(function (d) {
         return d.TYPE === 'source'
     });
-    var sinkCP = allCPs.filter(function (d) {
+    var sinkCP = self.allCPs.filter(function (d) {
         return d.TYPE === 'sink'
     });
-    var saddleCP = allCPs.filter(function (d) {
+    var saddleCP = self.allCPs.filter(function (d) {
         return d.TYPE === 'saddle'
     });
-    var leafCP = allCPs.filter(function (d) {
+    var leafCP = self.allCPs.filter(function (d) {
         return d.TYPE === 'leaf'
     });
 
@@ -286,12 +328,54 @@ Manager.prototype.init = function() {
         self.vfMean.push({vx: valueX/size, vy: valueY/size, norm: norm});
     }
 
-    /* slider */
-    d3.select("#slider").on("input", function () {
-        d3.select("#slider-value").text(+this.value);
-        d3.select("#slider").property("value", +this.value);
-        self.compChangeContour(+this.value);
+    /* Cluster Tab */
+
+    var colorScale = d3.scaleLinear()
+        .domain([0, 75])
+        .range(['#ccc', '#111']);
+
+    svg = d3.select("#cluster_svg_div")
+        .select("svg");
+
+    svg.selectAll('.contour')
+        .data(self.verts)
+        .enter().append('circle')
+        .classed('contour', true)
+        .attr('cx', function (d) {
+            return scaleX(d.x);
+        })
+        .attr('cy', function (d) {
+            return scaleY(d.y);
+        })
+        .attr('r', 5)
+        .attr("data-norm", 0)
+        .style("fill", function (d, i) {
+            return colorScale(self.vfMean[i].norm);
+        });
+
+    self.allCPs.forEach(function (d) {
+        d.x = self.faces[d.simplexIndex].v1x;
+        d.y = self.faces[d.simplexIndex].v1y;
     });
+
+    self.CPSxy = self.allCPs.map(function (d) {
+        return {'x': d.x, 'y': d.y, "cluster_id": -1};
+    });
+
+    svg.selectAll('.cluster')
+        .data(self.allCPs)
+        .enter().append('circle')
+        .attr('class','cluster')
+        .attr('cx', function (d) {
+            return scaleX(self.faces[d.simplexIndex].v1x);
+        })
+        .attr('cy', function (d) {
+            return scaleY(self.faces[d.simplexIndex].v1y);
+        })
+        .attr('r', 6)
+        .style("fill", "black")
+        .style('opacity', 1);
+
 
     console.log("Ready!");
 
@@ -1781,6 +1865,9 @@ Manager.prototype.genAnimation = function () {
     svg.selectAll('.contour')
         .attr("fill", "white");
 
+    svg.selectAll('.cluster')
+        .style('opacity', 0);
+
     // Perform animation
     for (var i = 0; i < self.ensData.vf.length; ++i)
         self.genDrawContour(self.ensData.vf[i], self.ensData.treeData[i], i)
@@ -1874,6 +1961,9 @@ Manager.prototype.genMean = function () {
             return colorScale(self.vfMean[i].norm);
         });
 
+    svg.selectAll('.cluster')
+        .style('opacity', 0);
+
     svg.selectAll('.cp')
         .style("opacity", function () {
             return d3.select(this).style("opacity");
@@ -1882,6 +1972,122 @@ Manager.prototype.genMean = function () {
         .duration(70)
         .style("fill","red")
         .style('opacity', 0.15);
+};
+
+Manager.prototype.genCluster = function () {
+    var self = this;
+
+    var scaleX = d3.scaleLinear()
+        .domain([self.minX, self.maxX])
+        .range([30, 470]);
+
+    var scaleY = d3.scaleLinear()
+        .domain([self.minY, self.maxY])
+        .range([30, 570]);
+
+    var svg = d3.select("#gen_svg_div").select("svg");
+    svg.transition();
+
+    d3.select("#gen_ens_title")
+        .transition()
+        .text(function () {
+            return "Cluster with epsilon=0.3"
+        });
+
+    var colorScale = d3.scaleLinear()
+        .domain([0, 75])
+        .range(['#ccc', '#111']);
+
+    d3.select("#gen_ens_title")
+        .transition()
+        .text(function () {
+            return "Mean"
+        });
+
+    svg.selectAll('.contour')
+        .attr("fill", function () {
+            var norm = +d3.select(this).attr("data-norm");
+            return colorScale(norm);
+        })
+        .transition()
+        .duration(1000)
+        .attr("data-norm", function (d, i) {
+            return self.vfMean[i].norm;
+        })
+        .style("fill", function (d, i) {
+            return colorScale(self.vfMean[i].norm);
+        });
+
+    svg.selectAll('.cp')
+        .style('opacity', 0);
+
+    console.log(self.ensData.cluster);
+
+    var clusters = svg.selectAll('.cluster')
+        .data(self.ensData.cluster);
+
+    clusters.enter()
+        .append('circle')
+        .attr("class", "cluster")
+        .attr('cx', function (d) {
+            return scaleX(d.x);
+        })
+        .attr('cy', function (d) {
+            return scaleY(d.y);
+        })
+        .attr('r', 6)
+        .style('fill', 'green')
+        .style('opacity', 0)
+        .merge(clusters)
+        .transition()
+        .duration(500)
+        .style('opacity', 1);
+
+    // events
+    svg.selectAll('.cluster ')
+        .on("mouseover", function (d) {
+
+            self.tooltip.transition()
+                .duration(200)
+                .style("opacity", 1);
+            self.tooltip.html(function () {
+                return self.tooltip_render_cluster(d);
+            })
+                .style("left", (d3.event.pageX + 28) + "px")
+                .style("top", (d3.event.pageY - 28) + "px");
+        })
+        .on("mouseout", function () {
+
+            self.tooltip.transition()
+                .duration(200)
+                .style("opacity", 0);
+        });
+};
+
+/*****/
+
+Manager.prototype.clusterCompute = function () {
+
+    var self = this;
+    for (var i=0; i<self.CPSxy.length; i++)
+        self.CPSxy[i].cluster_id = -1;
+
+    dbscan.run(self.CPSxy, self.CPSxy.length, self.epsilon, self.number, dbscan.euclidean_dist);
+
+    var colorScale = d3.scaleOrdinal(d3.schemeCategory20b);
+
+    d3.select("#cluster_svg_div")
+        .select("svg")
+        .selectAll('.cluster')
+        .attr("data-cluster", function (d, i) {
+            return self.CPSxy[i].cluster_id
+        })
+        .style("fill", function (d, i) {
+            if (self.CPSxy[i].cluster_id === -2)
+                return "none";
+            return colorScale(self.CPSxy[i].cluster_id)
+        });
+
 };
 
 /*****/
@@ -1896,6 +2102,37 @@ Manager.prototype.tooltip_render = function (tooltip_data) {
         text +=  "<strong>Robustness</strong>: " + format(tooltip_data.robustness);
     else
         text +=  "<strong>Robustness</strong>: " + "&#x221e;";
+
+    return text;
+};
+
+Manager.prototype.tooltip_render_cluster = function (tooltip_data) {
+    var format = d3.format(".4n");
+    var text = "<strong style='color:darkslateblue'> Cluster Size: " + "</strong>" +
+        + tooltip_data.CLUSTER_SIZE + "</br> ";
+    text += "<strong style='color:darkslateblue'> Number of Sources: " + "</strong>" +
+        + tooltip_data.N_SOURCE + "</br> ";
+    text += "<strong style='color:darkslateblue'> Number of Sinks: " + "</strong>" +
+        + tooltip_data.N_SINK + "</br> ";
+    text += "<strong style='color:darkslateblue'> Number of Saddles: " + "</strong>" +
+        + tooltip_data.N_SADDLE + "</br> ";
+
+    var type = "source";
+    var max_num = +tooltip_data.N_SOURCE;
+    type = +tooltip_data.N_SINK > max_num ? "sink" : type;
+    max_num = +tooltip_data.N_SINK > max_num ? +tooltip_data.N_SINK : max_num;
+    type = +tooltip_data.N_SADDLE > max_num ? "saddle" : type;
+    max_num = +tooltip_data.N_SADDLE > max_num ? +tooltip_data.N_SADDLE : max_num;
+
+    var prob = max_num/+tooltip_data.CLUSTER_SIZE.toString()
+    text += "With probability "+ format(prob)
+        + " this point is <strong style='color:darkred'>" + type + "</strong></br> ";
+
+    text += "<strong style='color:darkslateblue'> Average Robustness: " + "</strong>";
+    if (tooltip_data.MEDROBUSTNESS != 0)
+        text +=  format(tooltip_data.MEDROBUSTNESS);
+    else
+        text +=  "&#x221e;";
 
     return text;
 };

@@ -39,9 +39,10 @@
             .defer(d3.csv, "data/Navid/uv_ens14.txt")
             .defer(d3.csv, "data/Navid/tree_data_ens15.txt")
             .defer(d3.csv, "data/Navid/uv_ens15.txt")
+            .defer(d3.csv, "data/Navid/cluster.txt")
             .await(function (error, faces, verts, cps1, vf1, cps2, vf2, cps3, vf3, cps4, vf4,
                              cps5, vf5, cps6, vf6, cps7, vf7, cps8, vf8, cps9, vf9, cps10, vf10,
-                             cps11,vf11,cps12,vf12,cps13,vf13,cps14,vf14,cps15,vf15) {
+                             cps11,vf11,cps12,vf12,cps13,vf13,cps14,vf14,cps15,vf15, cluster) {
                 if (error) {
                     console.error('Error in reading the data: ' + error);
                 }
@@ -79,12 +80,22 @@
                         });
                     }
 
+                    cluster.forEach(function (d) {
+                       d.x = +d.X;
+                       d.y = +d.Y;
+                       d.source = +d.N_SOURCE;
+                       d.sink = +d.N_SINK;
+                       d.saddle = +d.N_SADDLE;
+                       d.robustness = +d.MEDROBUSTNESS;
+                    });
+
                     var ensData = {
                         'vf': vfList,
                         'treeData': cpsList,
                         'fileLocation': ["img/img1.png", "img/img2.png", "img/img3.png", "img/img4.png", "img/img5.png",
                             "img/img6.png", "img/img7.png", "img/img8.png", "img/img9.png", "img/img10.png",
-                            "img/img11.png", "img/img12.png", "img/img13.png", "img/img14.png", "img/img15"]
+                            "img/img11.png", "img/img12.png", "img/img13.png", "img/img14.png", "img/img15"],
+                        'cluster': cluster
                     };
 
                     var manager = new Manager(verts, faces, ensData);
