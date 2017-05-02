@@ -1989,7 +1989,6 @@ Manager.prototype.genCluster = function () {
     svg.transition();
 
     d3.select("#gen_ens_title")
-        .transition()
         .text(function () {
             return "Cluster with epsilon=0.3"
         });
@@ -1997,12 +1996,6 @@ Manager.prototype.genCluster = function () {
     var colorScale = d3.scaleLinear()
         .domain([0, 75])
         .range(['#ccc', '#111']);
-
-    d3.select("#gen_ens_title")
-        .transition()
-        .text(function () {
-            return "Mean"
-        });
 
     svg.selectAll('.contour')
         .attr("fill", function () {
