@@ -172,7 +172,7 @@ Manager.prototype.init = function() {
 
     var scaleX = d3.scaleLinear()
         .domain([self.minX, self.maxX])
-        .range([30, 470]);
+        .range([30, 570]);
 
     var scaleY = d3.scaleLinear()
         .domain([self.minY, self.maxY])
@@ -209,7 +209,7 @@ Manager.prototype.init = function() {
         .attr('cy', function (d) {
             return scaleY(d.y);
         })
-        .attr('r', 5)
+        .attr('r', 5.5)
         .style("fill", "white");
 
     /* Gen Tab */
@@ -231,7 +231,7 @@ Manager.prototype.init = function() {
         .attr('cy', function (d) {
             return scaleY(d.y);
         })
-        .attr('r', 5)
+        .attr('r', 5.5)
         .attr("data-norm", 0)
         .style("fill", "white");
 
@@ -347,7 +347,7 @@ Manager.prototype.init = function() {
         .attr('cy', function (d) {
             return scaleY(d.y);
         })
-        .attr('r', 5)
+        .attr('r', 5.5)
         .attr("data-norm", 0)
         .style("fill", function (d, i) {
             return colorScale(self.vfMean[i].norm);
@@ -391,7 +391,7 @@ Manager.prototype.individual = function (vf, treeData, fileLocation) {
     self.drawTree("#indi_tree_div", treeData, vf);
 
     //d3.select("#indi_lic_div").select("img").attr('src', fileLocation);
-    
+
 };
 
 Manager.prototype.drawVF = function (parentDIV, vf, treeData) {
@@ -399,7 +399,7 @@ Manager.prototype.drawVF = function (parentDIV, vf, treeData) {
 
     var scaleX = d3.scaleLinear()
         .domain([self.minX, self.maxX])
-        .range([30, 470]);
+        .range([30, 570]);
 
     var scaleY = d3.scaleLinear()
         .domain([self.minY, self.maxY])
@@ -619,7 +619,7 @@ Manager.prototype.drawContour = function (parentDIV, vf, treeData) {
 
     var scaleX = d3.scaleLinear()
         .domain([self.minX, self.maxX])
-        .range([30, 470]);
+        .range([30, 570]);
 
     var scaleY = d3.scaleLinear()
         .domain([self.minY, self.maxY])
@@ -1185,7 +1185,7 @@ Manager.prototype.compare = function (ensNumber, vf, treeData, fileLocation) {
     //self.compDrawVF("#comp_vf_" + divID, vf, treeData);
     self.compDrawContour("#comp_contour_" + divID, vf, treeData);
     self.compDrawTree("#comp_tree_" + divID, treeData);
-    self.compDrawRobutsnessDiagram("#comp_robustness_" + divID, treeData);
+    self.compDrawRobustnessDiagram("#comp_robustness_" + divID, treeData);
 
 };
 
@@ -1194,7 +1194,7 @@ Manager.prototype.compDrawContour = function (parentDIV, vf, treeData) {
 
     var scaleX = d3.scaleLinear()
         .domain([self.minX, self.maxX])
-        .range([20, 230]);
+        .range([20, 330]);
 
     var scaleY = d3.scaleLinear()
         .domain([self.minY, self.maxY])
@@ -1629,7 +1629,7 @@ Manager.prototype.compChangeContour = function (value) {
         });
 };
 
-Manager.prototype.compDrawRobutsnessDiagram = function (parentDIV, treeData) {
+Manager.prototype.compDrawRobustnessDiagram = function (parentDIV, treeData) {
     var self = this;
 
     // prepare data

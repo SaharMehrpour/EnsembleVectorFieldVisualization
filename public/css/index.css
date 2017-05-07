@@ -1,7 +1,7 @@
 /* Header */
 
 #header {
-    width: 1800px;
+    width: 2000px;
     height: 50px;
     background-color: #545454;
 }
@@ -64,7 +64,7 @@
 }
 
 #indi_dgm_div {
-    width: 1800px;
+    width: 2000px;
     min-height: 1000px;
 }
 
@@ -82,7 +82,7 @@
 }
 
 #indi_vf_div svg, #indi_contour_div svg, #indi_lic_div {
-    width: 500px;
+    width: 600px;
     height: 600px;
 }
 
@@ -148,7 +148,7 @@
     display: flex;
 }
 
-#comp_list_div .contour_diagram, #comp_list_div .tree_diagram,
+#comp_list_div .tree_diagram,
 #comp_list_div .lic_diagram {
     float: left;
     width: 300px;
@@ -156,9 +156,16 @@
     padding: 0 20px;
 }
 
+#comp_list_div .contour_diagram {
+    float: left;
+    width: 400px;
+    height: 400px;
+    padding: 0 20px;
+}
+
 #comp_list_div div svg {
     height: 350px;
-    width: 250px;
+    width: 350px;
 }
 
 #comp_list_div svg .arrows{
@@ -196,14 +203,18 @@
 }
 
 #gen_svg_div svg {
-    width: 500px;
+    width: 600px;
     height: 600px;
 }
 
 /* Cluster */
 
+#cluster_svg_div {
+    padding: 20px;
+}
+
 #cluster_svg_div svg {
-    width: 500px;
+    width: 600px;
     height: 600px;
 }
 
