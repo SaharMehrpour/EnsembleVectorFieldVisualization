@@ -1980,7 +1980,7 @@ Manager.prototype.genCluster = function () {
 
     var scaleX = d3.scaleLinear()
         .domain([self.minX, self.maxX])
-        .range([30, 470]);
+        .range([30, 570]);
 
     var scaleY = d3.scaleLinear()
         .domain([self.minY, self.maxY])
