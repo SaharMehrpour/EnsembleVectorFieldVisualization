@@ -1,0 +1,11 @@
+ID,TYPE,SIMPLEX,DEGREE,VALUE,PARENT,ROBUSTNESS
+0,leaf,156,0,0,,0
+1,leaf,4785,0,0,,0
+2,leaf,5595,0,0,,0
+3,leaf,5949,0,0,,0
+4,leaf,6757,0,0,,0
+5,leaf,8201,0,0,,0
+6,leaf,8211,0,0,,0
+7,leaf,8318,0,0,,0
+8,leaf,8455,0,0,,0
+9,leaf,8755,0,0,,0

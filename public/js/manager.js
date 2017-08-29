@@ -388,7 +388,8 @@ Manager.prototype.individual = function (vf, treeData, fileLocation) {
 
     self.drawVF("#indi_vf_div", vf, treeData);
     self.drawContour("#indi_contour_div", vf, treeData);
-    self.drawTree("#indi_tree_div", treeData, vf);
+    self.drawLegend();
+    //self.drawTree("#indi_tree_div", treeData, vf);
 
     //d3.select("#indi_lic_div").select("img").attr('src', fileLocation);
 
@@ -569,23 +570,23 @@ Manager.prototype.drawVF = function (parentDIV, vf, treeData) {
     leafPoints.enter().append('circle')
         .classed('leaf', true)
         .attr('cx', function (d) {
-            return scaleX(self.faces[d.simplexIndex].v1x);
+            return scaleX(d.x);
         })
         .attr('cy', function (d) {
-            return scaleY(self.faces[d.simplexIndex].v1y);
+            return scaleY(d.y);
         })
         .attr('r', 5)
         .style('opacity', 0)
-        .merge(sourcePoints)
+        .merge(leafPoints)
         .transition()
         .delay(2000)
         .duration(1500)
         .style('opacity', 1)
         .attr('cx', function (d) {
-            return scaleX(self.faces[d.simplexIndex].v1x);
+            return scaleX(d.x);
         })
         .attr('cy', function (d) {
-            return scaleY(self.faces[d.simplexIndex].v1y);
+            return scaleY(d.y);
         });
 
     // events
@@ -612,6 +613,7 @@ Manager.prototype.drawVF = function (parentDIV, vf, treeData) {
                 .classed("selected", false);
 
         });
+
 };
 
 Manager.prototype.drawContour = function (parentDIV, vf, treeData) {
@@ -1150,6 +1152,108 @@ Manager.prototype.changeContour = function (value, vf) {
         });
 };
 
+Manager.prototype.drawLegend = function () {
+
+    var width = 500,
+        height = 20;
+    var min = 0,
+        mid = 0.1,
+        max = 1;
+    // Scales
+    var colorRange = ['#7b3294', '#ffffbf', '#008837'],
+        color = d3.scaleLinear()
+            .domain([min, mid, max])
+            .range(colorRange);
+
+    var x = d3.scaleLinear()
+        .domain([min, max])
+        .range([0, width]);
+
+    var svg = d3.select('#key')
+        .append("g")
+        .attr("transform", "translate(10,0)"); // svg
+
+    // SVG defs
+    var defs = svg
+        .datum({min: min, mid: mid})
+        .append('svg:defs');
+
+    // Gradient defs
+    var gradient1 = defs.append('svg:linearGradient' 
+        .attr('id', 'gradient1');
+    var gradient2 = defs.append('svg:linearGradient')
+        .attr('id', 'gradient2');
+
+    // Gradient 1 stop 1
+    gradient1.append('svg:stop')
+        .datum({min: min})
+        .attr('stop-color', function (d) {
+            return color(d.min)
+        })
+        .attr('offset', '0%');
+
+    // Gradient 1 stop 2
+    gradient1.append('svg:stop')
+        .datum({mid: mid})
+        .attr('stop-color', function (d) {
+            return color(d.mid)
+        })
+        .attr('offset', '100%');
+
+    // Gradient 2 stop 1
+    gradient2.append('svg:stop')
+        .datum({mid: mid})
+        .attr('stop-color', function (d) {
+            return color(d.mid)
+        })
+        .attr('offset', '0%');
+
+    // Gradient 2 stop 2
+    gradient2.append('svg:stop')
+        .datum({max: max})
+        .attr('stop-color', function (d) {
+            return color(d.max)
+        })
+        .attr('offset', '100%');
+
+    // Gradient 1 rect
+    svg
+        .datum({min: min, mid: mid})
+        .append('svg:rect')
+        .attr('id', 'gradient1-bar')
+        .attr('fill', 'url(#gradient1)')
+        .attr('width', function (d) {
+            return x(d.mid)
+        })
+        .attr('height', height);
+
+    // Gradient 2 rect
+    svg
+        .datum({mid: mid, max: max})
+        .append('svg:rect')
+        .attr('id', 'gradient2-bar')
+        .attr('fill', 'url(#gradient2)')
+        .attr('transform', function (d) {
+            return 'translate(' + x(d.mid) + ',0)'
+        })
+        .attr('width', function (d) {
+            return x(d.max) - x(d.mid)
+        })
+        .attr('height', height);
+
+    // Append axis
+    var axis = d3.axisBottom()
+        .scale(x)
+        .tickFormat(d3.format('.0%'))
+        .tickValues([min, mid, max]);
+
+    svg.append('g').attr('class', 'axis');
+
+    svg.selectAll('.axis')
+        .attr('transform', 'translate(0,' + (height) + ')')
+        .call(axis);
+};
+
 /******/
 
 Manager.prototype.compare = function (ensNumber, vf, treeData, fileLocation) {
@@ -1184,8 +1288,8 @@ Manager.prototype.compare = function (ensNumber, vf, treeData, fileLocation) {
 
     //self.compDrawVF("#comp_vf_" + divID, vf, treeData);
     self.compDrawContour("#comp_contour_" + divID, vf, treeData);
-    self.compDrawTree("#comp_tree_" + divID, treeData);
-    self.compDrawRobustnessDiagram("#comp_robustness_" + divID, treeData);
+    //self.compDrawTree("#comp_tree_" + divID, treeData);
+    //self.compDrawRobustnessDiagram("#comp_robustness_" + divID, treeData);
 
 };
 

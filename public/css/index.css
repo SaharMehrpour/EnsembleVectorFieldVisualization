@@ -120,6 +120,15 @@
     max-height: 540px;
 }
 
+#key_div {
+    padding: 0 20px;
+}
+
+#key {
+    width: 600px;
+    height: 50px;
+}
+
 /* Compare Div */
 
 #comp_nav {

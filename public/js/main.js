@@ -7,37 +7,53 @@
      */
     function init() {
         d3.queue()
-            .defer(d3.csv, "data/Navid/tris.txt")
+            //.defer(d3.csv, "data/Navid/tris.txt")
+            .defer(d3.csv, "data/Sahar/tris0.txt")
             .defer(d3.csv, "data/Navid/xy.txt")
-            .defer(d3.csv, "data/Navid/tree_data_ens01.txt")
+            .defer(d3.csv, "data/Sahar/cps_ens01.txt")
+            //.defer(d3.csv, "data/Navid/tree_data_ens01.txt")
             .defer(d3.csv, "data/Navid/uv_ens01.txt")
-            .defer(d3.csv, "data/Navid/tree_data_ens02.txt")
+            .defer(d3.csv, "data/Sahar/cps_ens02.txt")
+            //.defer(d3.csv, "data/Navid/tree_data_ens02.txt")
             .defer(d3.csv, "data/Navid/uv_ens02.txt")
-            .defer(d3.csv, "data/Navid/tree_data_ens03.txt")
+            .defer(d3.csv, "data/Sahar/cps_ens03.txt")
+            //.defer(d3.csv, "data/Navid/tree_data_ens03.txt")
             .defer(d3.csv, "data/Navid/uv_ens03.txt")
-            .defer(d3.csv, "data/Navid/tree_data_ens04.txt")
+            .defer(d3.csv, "data/Sahar/cps_ens04.txt")
+            //.defer(d3.csv, "data/Navid/tree_data_ens04.txt")
             .defer(d3.csv, "data/Navid/uv_ens04.txt")
-            .defer(d3.csv, "data/Navid/tree_data_ens05.txt")
+            .defer(d3.csv, "data/Sahar/cps_ens05.txt")
+            //.defer(d3.csv, "data/Navid/tree_data_ens05.txt")
             .defer(d3.csv, "data/Navid/uv_ens05.txt")
-            .defer(d3.csv, "data/Navid/tree_data_ens06.txt")
+            .defer(d3.csv, "data/Sahar/cps_ens06.txt")
+            //.defer(d3.csv, "data/Navid/tree_data_ens06.txt")
             .defer(d3.csv, "data/Navid/uv_ens06.txt")
-            .defer(d3.csv, "data/Navid/tree_data_ens07.txt")
+            .defer(d3.csv, "data/Sahar/cps_ens07.txt")
+            //.defer(d3.csv, "data/Navid/tree_data_ens07.txt")
             .defer(d3.csv, "data/Navid/uv_ens07.txt")
-            .defer(d3.csv, "data/Navid/tree_data_ens08.txt")
+            .defer(d3.csv, "data/Sahar/cps_ens08.txt")
+            //.defer(d3.csv, "data/Navid/tree_data_ens08.txt")
             .defer(d3.csv, "data/Navid/uv_ens08.txt")
-            .defer(d3.csv, "data/Navid/tree_data_ens09.txt")
+            .defer(d3.csv, "data/Sahar/cps_ens09.txt")
+            //.defer(d3.csv, "data/Navid/tree_data_ens09.txt")
             .defer(d3.csv, "data/Navid/uv_ens09.txt")
-            .defer(d3.csv, "data/Navid/tree_data_ens10.txt")
+            .defer(d3.csv, "data/Sahar/cps_ens10.txt")
+            //.defer(d3.csv, "data/Navid/tree_data_ens10.txt")
             .defer(d3.csv, "data/Navid/uv_ens10.txt")
-            .defer(d3.csv, "data/Navid/tree_data_ens11.txt")
+            .defer(d3.csv, "data/Sahar/cps_ens11.txt")
+            //.defer(d3.csv, "data/Navid/tree_data_ens11.txt")
             .defer(d3.csv, "data/Navid/uv_ens11.txt")
-            .defer(d3.csv, "data/Navid/tree_data_ens12.txt")
+            .defer(d3.csv, "data/Sahar/cps_ens12.txt")
+            //.defer(d3.csv, "data/Navid/tree_data_ens12.txt")
             .defer(d3.csv, "data/Navid/uv_ens12.txt")
-            .defer(d3.csv, "data/Navid/tree_data_ens13.txt")
+            .defer(d3.csv, "data/Sahar/cps_ens13.txt")
+            //.defer(d3.csv, "data/Navid/tree_data_ens13.txt")
             .defer(d3.csv, "data/Navid/uv_ens13.txt")
-            .defer(d3.csv, "data/Navid/tree_data_ens14.txt")
+            .defer(d3.csv, "data/Sahar/cps_ens14.txt")
+            //.defer(d3.csv, "data/Navid/tree_data_ens14.txt")
             .defer(d3.csv, "data/Navid/uv_ens14.txt")
-            .defer(d3.csv, "data/Navid/tree_data_ens15.txt")
+            .defer(d3.csv, "data/Sahar/cps_ens15.txt")
+            //.defer(d3.csv, "data/Navid/tree_data_ens15.txt")
             .defer(d3.csv, "data/Navid/uv_ens15.txt")
             .defer(d3.csv, "data/Navid/cluster.txt")
             .await(function (error, faces, verts, cps1, vf1, cps2, vf2, cps3, vf3, cps4, vf4,
@@ -55,12 +71,12 @@
 
 
                     faces.forEach(function (d) {
-                        d.v1x = verts[+d['T1'] - 1].x;
-                        d.v2x = verts[+d['T2'] - 1].x;
-                        d.v3x = verts[+d['T3'] - 1].x;
-                        d.v1y = verts[+d['T1'] - 1].y;
-                        d.v2y = verts[+d['T2'] - 1].y;
-                        d.v3y = verts[+d['T3'] - 1].y;
+                        d.v1x = verts[+d['T1']].x; // changed
+                        d.v2x = verts[+d['T2']].x;
+                        d.v3x = verts[+d['T3']].x;
+                        d.v1y = verts[+d['T1']].y;
+                        d.v2y = verts[+d['T2']].y;
+                        d.v3y = verts[+d['T3']].y;
                     });
 
                     var cpsList = [cps1, cps2, cps3, cps4, cps5, cps6, cps7, cps8, cps9, cps10, cps11,cps12,cps13,cps14,cps15];
@@ -72,7 +88,8 @@
                             d.type = d['TYPE'];
                             d.robustness = +d['ROBUSTNESS'];
                             d.ensemble = i;
-
+                            d.x = (faces[d.simplexIndex].v1x + faces[d.simplexIndex].v2x + faces[d.simplexIndex].v3x)/3
+                            d.y = (faces[d.simplexIndex].v1y + faces[d.simplexIndex].v2y + faces[d.simplexIndex].v3y)/3
                         });
                         vfList[i].forEach(function (d) {
                             d.vx = +d['U'];
