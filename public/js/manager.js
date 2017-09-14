@@ -1179,7 +1179,7 @@ Manager.prototype.drawLegend = function () {
         .append('svg:defs');
 
     // Gradient defs
-    var gradient1 = defs.append('svg:linearGradient' 
+    var gradient1 = defs.append('svg:linearGradient') 
         .attr('id', 'gradient1');
     var gradient2 = defs.append('svg:linearGradient')
         .attr('id', 'gradient2');
